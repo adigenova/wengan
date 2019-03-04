@@ -7,3 +7,6 @@ An accurate and ultra-fast hybrid assembler
 + [Liger](https://github.com/adigenova/liger)
 
 <img src="./wengan-diagram.svg">
+
+# About the name
+**Wengan** is a Mapudungun word. The Mapudungun is the language of the [**Mapuche**](https://en.wikipedia.org/wiki/Mapuche) people, the largest indigenous inhabitants of south-central Chile. **Wengan** means "***Making the path***".
