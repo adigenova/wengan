@@ -1,5 +1,5 @@
 # Wengan
-An accurate and ultra-fast hybrid assembler
+An accurate and ultra-fast genome assembler
 # Wengan components
 + A bruijn graph assembler ([Minia](https://github.com/GATB/minia), [Abyss](https://github.com/bcgsc/abyss) or [DiscovarDenovo](https://software.broadinstitute.org/software/discovar/blog/))
 + [FastMIN-SG](https://github.com/adigenova/fastmin-sg)
