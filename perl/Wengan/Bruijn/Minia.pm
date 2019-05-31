@@ -45,8 +45,9 @@ sub create_jobs{
       push(@{$self->{jobs}},$job);
       $self->{contigs}=$job->{target}[0];
       #$self->{main_target}=@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0];
+      push(@{$self->{main_target}},@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
       $self->_create_coveragefile_jobs($self->{contigs});
-      $self->{main_target}=@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0];
+      push(@{$self->{main_target}},@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
 
   }elsif($self->{preset} eq "pacccs"){
     #create the normal jobs
@@ -115,9 +116,11 @@ sub _create_jobs_long{
         push(@{$self->{jobs}},$job);
     }
     # we add the target coverage file
-    $self->{main_target}=@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0];
+    #$self->{main_target}=@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0];
+    push(@{$self->{main_target}},@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
     # we add the target coverage file
     $self->_create_coveragefile_jobs(@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
+    push(@{$self->{main_target}},@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
     #return $self->{jobs};
 }
 
@@ -168,9 +171,12 @@ sub _create_jobs_short{
         push(@{$self->{jobs}},$job);
     }
     # we set the main target to the contigs files
-    $self->{main_target}=@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0];
+    #$self->{main_target}=@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0];
+    push(@{$self->{main_target}},@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
     # we add the target coverage file
     $self->_create_coveragefile_jobs(@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
+    #coverage file for minia
+    push(@{$self->{main_target}},@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
     #$self->{main_target}=@{$self->{jobs}}[$#{$self->{jobs}}]->{target};
     #return $self->{jobs};
 }

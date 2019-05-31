@@ -37,8 +37,8 @@ sub new{
 
 sub set_init_dependency{
       my ($self,$dep)=@_;
-      $self->{dependency}=$dep;
-      $self->{contigs}=$dep;
+      push(@{$self->{dependency}},@{$dep});
+      $self->{contigs}=@$dep[0];
 }
 
 sub has_dependency{
@@ -64,7 +64,7 @@ sub create_jobs{
   push(@{$self->{main_target}},$self->{contigs});
   if($self->{preset} eq "pacccs"){
     #pacbio CCS reads, non-hybrid assembly
-      push(@{$job->{deps}},$self->{dependency});
+      push(@{$job->{deps}},@{$self->{dependency}});
       my $c=1;
       foreach my $r (@{$reads->{lreads}}){
           if($c == 1){
@@ -80,7 +80,7 @@ sub create_jobs{
       #now we create the comand that run FastMin-SG
   }else{
     #normal short reads
-    push(@{$job->{deps}},$self->{dependency});
+    push(@{$job->{deps}},@{$self->{dependency}});
     my $c=1;
     foreach my $r (@{$reads->{sreads}}){
         if($c == 1){

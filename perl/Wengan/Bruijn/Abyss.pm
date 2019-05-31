@@ -41,7 +41,7 @@ sub create_jobs{
       $self->{contigs}=$job->{target}[0];
       #clean the contigs
       $self->_create_seqtk_jobs(@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
-      $self->{main_target}=@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0];
+      push(@{$self->{main_target}},@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
 
   }else{
     #default method for create jobs
@@ -58,7 +58,7 @@ sub _def_parameters{
       #B=40G H=4 kc=3 v=-v contigs 2>abyss60X.err >abyss60X.log
       #lib="pea peb" pea="SRR5534476_1.fastq.gz SRR5534476_2.fastq.gz" peb="SRR5534475_1.fastq.gz SRR5534475_2.fastq.gz"
       my $param="k=96  B=40G H=4 kc=3 v=-v ";
-      if($rlen >=250){
+      if($rlen >=200){
         $param="k=128 B=40G H=4 kc=3 v=-v ";
       }
       return $param;
@@ -94,7 +94,7 @@ sub _create_jobs_short{
       push(@{$self->{jobs}},$job);
     # we add the after assembly steps
     $self->_create_seqtk_jobs(@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
-    $self->{main_target}=@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0];
+    push(@{$self->{main_target}},@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
 
     #return $self->{jobs};
 }
