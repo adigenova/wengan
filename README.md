@@ -1,18 +1,5 @@
 # Wengan
 An accurate and ultra-fast genome assembler
-# Wengan components
-+ A bruijn graph assembler ([Minia](https://github.com/GATB/minia), [Abyss](https://github.com/bcgsc/abyss) or [DiscovarDenovo](https://software.broadinstitute.org/software/discovar/blog/))
-+ [FastMIN-SG](https://github.com/adigenova/fastmin-sg)
-+ [IntervalMiss](https://github.com/adigenova/intervalmiss)
-+ [Liger](https://github.com/adigenova/liger)
-
-<img src="./wengan-diagram.svg">
-
-# About the name
-**Wengan** is a [Mapudungun](https://en.wikipedia.org/wiki/Mapuche_language) word. The Mapudungun is the language of the [**Mapuche**](https://en.wikipedia.org/wiki/Mapuche) people, the largest indigenous inhabitants of south-central Chile. **Wengan** means "***Making the path***".
-# NAME
-
-**Wengan** - An accurate and ultrafast genome assembler
 
 # SYNOPSIS
 
@@ -44,16 +31,7 @@ An accurate and ultra-fast genome assembler
 
 **Wengan** is a new genome assembler that unlike most of the current long-reads assemblers avoid entirely the all-vs-all read comparison.
 The key idea behind **Wengan** is that long-read alignments can be **inferred by building paths** on a sequence graph. To achieve this, **Wengan** build a new sequence graph called the Synthetic Scaffolding Graph. The SSG is build from a spectrum of synthetic mate-pair libraries extracted from raw long-reads. Then, longer alignments are build by peforming a transitive reduction of the edges.
-Another distinct feature of **Wengan** is that is the only assembler that perform **self-validation** by following the read information. **Wengan** identify miss-assemblies at differents steps of the assembly process. For more information about the algorithmic ideas behind **Wengan** please read the preprint available on bioRxiv.
-
-## About the name
-
-**Wengan** is a Mapudungun word. The Mapudungun is the language of the **Mapuche** people, the largest indigenous inhabitants of south-central Chile. **Wengan** means _"Making the path"_.
-Thus, when you assemble a genome with wengan, you are literally _making the genome path_.
-
-# AUTHOR - Alex Di Genova
-
-Email digenova@gmail.com
+Another distinct feature of **Wengan** is that perform **self-validation** by following the read information. **Wengan** identify miss-assemblies at differents steps of the assembly process. For more information about the algorithmic ideas behind **Wengan** please read the preprint available on bioRxiv.
 
 # SHORT-READ ASSEMBLY
 
@@ -115,3 +93,15 @@ IntervalMiss detect miss-assembled contigs and correct them when necessary.
 Liger use the Synthetic Scaffoding Graph to compute overlap among long reads,
 order and orient short contigs, validate scaffols sequences, fill the gaps and
 polishing of the assembly.
+
+# Wengan components
++ A bruijn graph assembler ([Minia](https://github.com/GATB/minia), [Abyss](https://github.com/bcgsc/abyss) or [DiscovarDenovo](https://software.broadinstitute.org/software/discovar/blog/))
++ [FastMIN-SG](https://github.com/adigenova/fastmin-sg)
++ [IntervalMiss](https://github.com/adigenova/intervalmiss)
++ [Liger](https://github.com/adigenova/liger)
+
+<img src="./wengan-diagram.svg">
+
+# About the name
+**Wengan** is a [Mapudungun](https://en.wikipedia.org/wiki/Mapuche_language) word. The Mapudungun is the language of the [**Mapuche**](https://en.wikipedia.org/wiki/Mapuche) people, the largest indigenous inhabitants of south-central Chile. **Wengan** means "***Making the path***".
+
