@@ -75,25 +75,6 @@ preset for raw long-reads from Pacific Bioscience (PacBio) tipically having an  
 
 preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) tipically having an  N50 ~\[15kb\].
 
-# WENGAN ADVANCED OPTIONS
-
-The following options allows to override the presets of **Wengan** components.
-Don't change this variables if you are not sure.
-
-## FastMin-SG
-
-An alignment-free algorithm for ultrafast scaffolding graph construction from short or long reads.
-
-## IntervalMiss
-
-IntervalMiss detect miss-assembled contigs and correct them when necessary.
-
-## Liger
-
-Liger use the Synthetic Scaffoding Graph to compute overlap among long reads,
-order and orient short contigs, validate scaffols sequences, fill the gaps and
-polishing of the assembly.
-
 # Wengan components
 + A bruijn graph assembler ([Minia](https://github.com/GATB/minia), [Abyss](https://github.com/bcgsc/abyss) or [DiscovarDenovo](https://software.broadinstitute.org/software/discovar/blog/))
 + [FastMIN-SG](https://github.com/adigenova/fastmin-sg)
