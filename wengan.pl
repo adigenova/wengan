@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 
 ###############################################################################
 # Author: Alex Di Genova
@@ -12,7 +13,7 @@ B<Wengan> - An accurate and ultrafast genome assembler
 
 =head1 SYNOPSIS
 
-  # Assembling Oxford nanopore and illumina reads wiht WenganM
+  # Assembling Oxford nanopore and illumina reads with WenganM
    wengan.pl -x ontraw -a M -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l ont.fastq.gz -p asm1 -t 20 -g 3000
 
   # Assembling PacBio reads and illumina reads with WenganA
@@ -27,13 +28,13 @@ B<Wengan> - An accurate and ultrafast genome assembler
   # Assembling ultra-long nanopore reads and Illumina reads with WenganD (requires a high memory machine 600Gb)
    wengan.pl -x ontlon -a D -s lib2.fwd.fastq.gz,lib2.rev.fastq.gz -l ont.fastq.gz -p asm5 -t 20 -g 3000
 
-  # Assembling pacraw reads wiht pre-assembled short-read contigs from Minia3
+  # Assembling pacraw reads with pre-assembled short-read contigs from Minia3
    wengan.pl -x pacraw -a M -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l pac.fastq.gz -p asm6 -t 20 -g 3000 -c contigs.minia.fa
 
-  # Assembling pacraw reads wiht pre-assembled short-read contigs from Abyss
+  # Assembling pacraw reads with pre-assembled short-read contigs from Abyss
    wengan.pl -x pacraw -a A -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l pac.fastq.gz -p asm7 -t 20 -g 3000 -c contigs.abyss.fa
 
-  # Assembling pacraw reads wiht pre-assembled short-read contigs from DiscovarDenovo
+  # Assembling pacraw reads with pre-assembled short-read contigs from DiscovarDenovo
    wengan.pl -x pacraw -a D -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l pac.fastq.gz -p asm8 -t 20 -g 3000 -c contigs.disco.fa
 
 =head1 DESCRIPTION
@@ -57,7 +58,7 @@ Email digenova@gmail.com
 
 B<Wengan> uses a de bruijn graph assembler to build the assembly backbone from short-read data.
 Currently, B<Wengan> can use B<Minia3>, B<Abyss2> or B<DiscoVarDenovo>.  The recomended short-read coverage
-is B<50-60X> of 150bp x 2 or 250bp x 2 short reads.
+is B<50-60X> of 2 x 150bp  or 2 x 250bp short reads.
 
 =head2 WenganM [M]
 
@@ -90,23 +91,59 @@ use Wengan::Reads; # class to handle the read data.
 use Wengan::Scheduler::Local; # the scheduler is make and control the execution end-to-end
 
 sub usage {
-   print "$0 usage : -x preset -a M [M,A,D] -s short-reads[fwd1.fastq.gz,rev1.fastq.gz,fwd2.fastq.gz,rev2.fastq.gz..] -l long-reads.fq.gz -p prefix -t cpus -g 3 [genomesize in Mb] -c <assembled short-read contigs> -i <insert size lists> -n <show pipeline comands>\n";
-   #system("perldoc $0");
-   print "$0 -h for detailed usage information\n";
+   die(qq/
+  Usage example :
+    # Assembling Oxford nanopore and illumina reads with WenganM
+    wengan.pl -x ontraw -a M -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l ont.fastq.gz -p asm1 -t 20 -g 3000
+
+  Wengan options:
+
+   Mandatory options***:
+      -x preset [ontlon,ontraw,pacraw,pacccs]
+      -a Mode [M,A,D]
+      -s short-reads [fwd1.fastq.gz,rev1.fastq.gz..]
+      -l long-reads.fq.gz
+      -g 3000 [genomesize in Mb]
+      -p prefix
+
+   General Options :
+      -h [detail information]
+      -t cores [1]
+      -c <pre-assembled short-read contigs>
+      -i <insert size lists>
+      -n <show pipeline comands>;
+
+   Advanced Options (Change the presets):
+      FastMin-SG options:
+        -k k-mer size [15-28]
+        -w minimizer window [5-15]
+        -q minimum mapping quality [20-60]
+        -m moving window [150]
+      IntervalMiss options:
+        -d Minimum base coverage [def:7]
+      Liger options:
+        -M Minimum contig length in backbone [def:2000]
+        -L Length of long mate-edges[def:100000]
+        -N Number of long-read needed to keep a potencial erroneus mate-edge[def:5]
+        -P Minimum length of reduced paths to convert them to physical fragments[def:20kb]
+
+ $0 -h for detailed usage information.
+   \n/);
    exit 1;
 }
 
+#x:s:l:p:t:g:a:c:i:k:w:q:m:d:M:L:N:P:hn
 
 my %opts = ();
 
-getopts( "x:s:l:p:t:g:a:c:i:I:L:F:hn", \%opts );
+getopts( "x:s:l:p:t:g:a:c:i:k:w:q:m:d:M:L:N:P:hn", \%opts );
 #display help usage using the perldoc
 if($opts{h}){
    system("perldoc $0");
    exit 0;
 }
 
-#mandatory varibles
+#mandatory variables
 if (!defined $opts{x} or !defined $opts{l} or !defined $opts{g}) {
    usage;
 }
@@ -135,6 +172,11 @@ if($opts{x} eq "pacccs" and $opts{a} ne "M"){
   exit 1;
 }
 
+#we define number of threads for the pipeline.
+if(!defined $opts{t}){
+  $opts{t}=1;
+}
+
 # we check the pipeline called
 my $pipeline=();
 
@@ -150,7 +192,10 @@ if($opts{a} eq "M"){
 	usage();
 	exit 1;
 }
+
 #print Dumper(%opts);
+#print Dumper($pipeline)
+
 #we check if the user want to see the comand being executed
 if($opts{n}){
   $pipeline->show_pipeline();
@@ -158,8 +203,8 @@ if($opts{n}){
 $pipeline->run();
 }
 
-#We need to check for fast-sg exec and kmc
-#my $fhome=dirname($0);
+
+
 
 =head1 LONGREADS PRESETS
 
@@ -192,7 +237,6 @@ sub wengan_ontraw{
 	$reads->add_short_reads($opts{s});
 	$reads->add_long_reads($opts{l});
   #print Dumper($reads);
-
 }
 
 
@@ -225,8 +269,6 @@ sub wengan_pacccs{
 }
 
 
-# not sure if allow this
-
 =head1 WENGAN ADVANCED OPTIONS
 
 The following options allows to override the presets of B<Wengan> components.
@@ -237,9 +279,26 @@ Don't change this variables if you are not sure.
 
 An alignment-free algorithm for ultrafast scaffolding graph construction from short or long reads.
 
+
+=head3 FastMin-SG options (Override the presets)
+
+   Indexing:
+    -k INT       k-mer size (no larger than 28) [15]
+    -w INT       minizer window size [10]
+
+  Mapping synthetic read-pairs:
+
+    -i list      Insert sizes for synthetic libraries [i.e 500,1000,2000,3000,4000,5000, .. ,20000]
+    -q INT       Minimum quality score (no larger than 60) [40]
+    -m INT       Moving windown [150]
+
 =head2 IntervalMiss
 
 IntervalMiss detect miss-assembled contigs and correct them when necessary.
+
+=head3 IntervalMiss options
+
+  -d INT Minimum base coverage [<10]
 
 
 =head2  Liger
@@ -248,10 +307,23 @@ Liger use the Synthetic Scaffoding Graph to compute overlap among long reads,
 order and orient short contigs, validate scaffols sequences, fill the gaps and
 polishing of the assembly.
 
+=head3 Liger options
+
+Short-contigs options:
+
+      -M INT     Minimum contig length in scaffolding [--mcs] (default=`2000', min=`1000')
+
+Long-reads overlap options:
+
+      -L         Length of long mate-edges [--lme] (default=`100000')
+
+Validation of lines options:
+
+      -N INT     Number of long-read needed to keep a potencial erroneus mate-edge [--nlm] (default=`5', min=`2')
+      -P INT     Minimum length of reduced paths to convert them to physical fragments [--mlp] (default=`20000', min=`5000')
+
 =cut
 
-
-#get dirname
 sub dirname {
 	my $prog = shift;
 	return '.' unless ($prog =~ /\//);

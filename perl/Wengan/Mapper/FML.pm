@@ -26,7 +26,7 @@ sub new{
 	}
 
   #minimum variables for FastMin-SG
-  my $self = {contigs=>undef,dependency=>undef,cores=>$opts{t},prefix=>$opts{p}, preset=>$opts{x}, gs=>$opts{g}, uin=>$opts{i}};
+  my $self = {contigs=>undef,dependency=>undef,cores=>$opts{t},prefix=>$opts{p}, preset=>$opts{x}, gs=>$opts{g}, uin=>$opts{i},opts=>\%opts};
   #we ask if the contigs are passed
   if(defined $opts{c}){
     $self->{contigs}=$opts{c};
@@ -131,17 +131,50 @@ sub _def_parameters{
       $k=19 if($self->{gs} <500);
       #bacterial genomes
       $k=15 if($self->{gs} <10);
+
+      my $w=5;
+      my $q=40;
+      my $m=150;
+
       #we define the preset for mapping the long-reads to the set of contigs
-      my  $param = "ontlon -k $k -w 5 -q 30 -r 300";
+      my  $param = "ontlon -k $k -w $w -q $q -m $m -r 300";
       #FastMin-SG presets
       if($self->{preset} eq "pacccs"){
-           $param = "pacccs -k 21 -w 10 -q 30 -r 500";
+            #preset for pacccs
+            $k=21;
+            $w=10;
+            # we override the variables if they are given by the user
+            $k = (defined $self->{opts}->{k}) ? $self->{opts}->{k}:$k;
+            $q = (defined $self->{opts}->{q}) ? $self->{opts}->{q}:$q;
+            $m = (defined $self->{opts}->{m}) ? $self->{opts}->{m}:$m;
+            $w = (defined $self->{opts}->{w}) ? $self->{opts}->{w}:$w;
+
+           $param = "pacccs -k $k -w $w -q $q -m $m -r 500";
       }elsif($self->{preset} eq "ontlon"){
-         $param = "ontlon -k $k -w 5 -q 30 -r 300";
+         #$param = "ontlon -k $k -w 5 -q 40 -r 300";
+         $w=5;
+         # we override the variables if they are given by the user
+         $k = (defined $self->{opts}->{k}) ? $self->{opts}->{k}:$k;
+         $q = (defined $self->{opts}->{q}) ? $self->{opts}->{q}:$q;
+         $m = (defined $self->{opts}->{m}) ? $self->{opts}->{m}:$m;
+         $w = (defined $self->{opts}->{w}) ? $self->{opts}->{w}:$w;
+        $param = "ontlon -k $k -w $w -q $q -m $m -r 300";
+
       }elsif($self->{preset} eq "pacraw"){
-            $param = "pacraw -k $k -w 5 -q 30 -r 300";
+            #$param = "pacraw -k $k -w 5 -q 40 -r 300";
+            $k = (defined $self->{opts}->{k}) ? $self->{opts}->{k}:$k;
+            $q = (defined $self->{opts}->{q}) ? $self->{opts}->{q}:$q;
+            $m = (defined $self->{opts}->{m}) ? $self->{opts}->{m}:$m;
+            $w = (defined $self->{opts}->{w}) ? $self->{opts}->{w}:$w;
+           $param = "pacraw -k $k -w $w -q $q -m $m -r 300";
+
       }elsif($self->{preset} eq "ontraw"){
-        $param = "ontraw -k $k -w 5 -q 30 -r 300";
+        #$param = "ontraw -k $k -w 5 -q 40 -r 300";
+        $k = (defined $self->{opts}->{k}) ? $self->{opts}->{k}:$k;
+        $q = (defined $self->{opts}->{q}) ? $self->{opts}->{q}:$q;
+        $m = (defined $self->{opts}->{m}) ? $self->{opts}->{m}:$m;
+        $w = (defined $self->{opts}->{w}) ? $self->{opts}->{w}:$w;
+       $param = "ontraw -k $k -w $w -q $q -m $m -r 300";
       }
       return $param;
 }

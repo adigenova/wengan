@@ -25,7 +25,7 @@ sub new{
 	}
 
   #minimum variables for liger
-  my $self = {contigs=>undef,lreads=>undef,dependency=>undef,pipeline=>$opts{a},cores=>$opts{t},prefix=>$opts{p}, preset=>$opts{x}};
+  my $self = {contigs=>undef,lreads=>undef,dependency=>undef,pipeline=>$opts{a},cores=>$opts{t},prefix=>$opts{p}, preset=>$opts{x},opts=>\%opts};
   #we ask if the contigs are passed
   if(defined $opts{c}){
     $self->{contigs}=$opts{c};
@@ -77,7 +77,7 @@ sub create_jobs{
             if($insert < $self->{maxgis}){
                 push(@{$job->{cmds}},join(" ","\@echo",$s," >> ",$self->{prefix}.".sams.txt"));
               }else{
-                push(@{$job->{cmds}},join(" ","\@echo \"$s\\t$insert\""," >> ",$self->{prefix}.".sams.txt"));
+                push(@{$job->{cmds}},join(" ","\@echo \"$s	$insert\""," >> ",$self->{prefix}.".sams.txt"));
             }
           }
     $c++;
@@ -100,24 +100,46 @@ sub create_jobs{
 #current parameters for liger
 sub _def_parameters{
       my $self=shift;
-      my  $param = "--mlp 20000";
+      my  $param = "";
       #FastMin-SG presets
       if($self->{preset} eq "pacccs"){
-           $param = "--mlp 10000 --mcs 1000";
+           $param = (defined $self->{opts}->{M}) ? " --mcs ".$self->{opts}->{M}:" --mcs 1000";
+           $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
+           $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
+           $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
            $self->{maxgis}=10000;#set the insert size that are not inferred 10% of the synthetic
       }elsif($self->{preset} eq "ontlon"){
-         $param = "--mlp 20000";
+         #$param = "--mlp 20000";
+         $param = (defined $self->{opts}->{M}) ? " --mcs ".$self->{opts}->{M}:"";
+         $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 20000";
+         $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
+         $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
          $self->{maxgis}=16000;
       }elsif($self->{preset} eq "pacraw"){
-            $param = "--mlp 10000";
+            #$param = "--mlp 10000";
+            $param = (defined $self->{opts}->{M}) ? " --mcs ".$self->{opts}->{M}:"";
+            $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
+            $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
+            $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
             $self->{maxgis}=8000;
+
       }elsif($self->{preset} eq "ontraw"){
-        $param = "--mlp 10000";
+        #$param = "--mlp 10000";
+        $param = (defined $self->{opts}->{M}) ? " --mcs ".$self->{opts}->{M}:"";
+        $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
+        $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
+        $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
         $self->{maxgis}=16000;
+
       }elsif($self->{preset} eq "pacraw" and $self->{pipeline} eq "M"){
-            $param = "--mlp 10000 --mcs 1000";
+            #$param = "--mlp 10000 --mcs 1000";
+            $param = (defined $self->{opts}->{M}) ? " --mcs ".$self->{opts}->{M}:" --mcs 1000";
+            $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
+            $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
+            $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
             $self->{maxgis}=7000;
       }
+
       return $param;
 }
 

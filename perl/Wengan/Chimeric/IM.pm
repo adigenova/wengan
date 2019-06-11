@@ -21,8 +21,8 @@ sub new{
 		die "IntervalMiss binary not found\n";
 	}
 
-  #minimum variables for FastMin-SG
-  my $self = {contigs=>undef,dependency=>undef,cores=>$opts{t},prefix=>$opts{p}, preset=>$opts{x}, pipeline=>$opts{a}};
+  #minimum variables for IntervalMiss
+  my $self = {contigs=>undef,dependency=>undef,cores=>$opts{t},prefix=>$opts{p}, preset=>$opts{x}, pipeline=>$opts{a},opts=>\%opts};
   #we ask if the contigs are passed
   if(defined $opts{c}){
     $self->{contigs}=$opts{c};
@@ -114,25 +114,34 @@ sub _set_depth{
 #some parameters for WenganM pipeline
 sub _def_parameters{
       my ($self,$rlen)=@_;
-      my $param = "-d 7";
-      $self->_set_depth(7);
+
+      #default depth
+      my $d = 7;
+      my $param = "-d $d";
+      $self->_set_depth($d);
       #we adjust for PACCCS data
       if($self->{preset} eq "pacccs"){
-            $param = "-d 3";
-            $self->_set_depth(3);
+            $d=3;
+            $param = "-d $d";
+            $self->_set_depth($d);
+      }
+      #Discovar contigs are more accurate than Minia3 and Abyss2.
+      if($self->{pipeline} eq "D"){
+          $d = 1;
+          $param = "-d $d";
+          $self->_set_depth($d);
       }
 
+      #we ask if the -d option was specified
+      if(defined $self->{opts}->{d}){
+         $d = $self->{opts}->{d};
+        $param = "-d $d";
+        $self->_set_depth($d);
+      }
       #means WenganM pipeline, we have to provide the coverage minia3 file
       if($self->{pipeline} eq "M"){
           $param.=" -b ".$self->{prefix}.".minia.121.contigs.cov.txt";
       }
-
-      #Discovar contigs are more accurate than Minia3 and Abyss2.
-      if($self->{pipeline} eq "D"){
-          $param = "-d 1";
-          $self->_set_depth(1);
-      }
-
       return $param;
 }
 
