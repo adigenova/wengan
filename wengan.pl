@@ -45,10 +45,10 @@ The key idea behind B<Wengan> is that long-read alignments can be B<inferred by 
 Another distinct feature of B<Wengan> is that is the only assembler that perform B<self-validation> by following the read information. B<Wengan> identify miss-assemblies at differents steps of the assembly process. For more information about the algorithmic ideas behind B<Wengan> please read the preprint available on bioRxiv.
 
 
-=head2 About the name
+=head2 ABOUT THE NAME
 
-B<Wengan> is a Mapudungun word. The Mapudungun is the language of the B<Mapuche> people, the largest indigenous inhabitants of south-central Chile. B<Wengan> means I<"Making the path">.
-Thus, when you assemble a genome with wengan, you are literally I<making the genome path>.
+B<Wengan> is a Mapudungun word. The B<Mapudungun> is the language of the B<Mapuche> people, the largest indigenous inhabitants of south-central Chile. B<Wengan> means I<"Making the path">.
+Thus, when you assemble a genome with B<Wengan>, you are I<making the genome path>.
 
 =head1 AUTHOR - Alex Di Genova
 
@@ -103,7 +103,7 @@ sub usage {
       -a Mode [M,A,D]
       -s short-reads [fwd1.fastq.gz,rev1.fastq.gz..]
       -l long-reads.fq.gz
-      -g 3000 [genomesize in Mb]
+      -g 3000 [genome size in Mb]
       -p prefix
 
    General Options :
@@ -123,9 +123,10 @@ sub usage {
         -d Minimum base coverage [def:7]
       Liger options:
         -M Minimum contig length in backbone [def:2000]
-        -L Length of long mate-edges[def:100000]
-        -N Number of long-read needed to keep a potencial erroneus mate-edge[def:5]
-        -P Minimum length of reduced paths to convert them to physical fragments[def:20kb]
+        -R Repeat copy number factor [def:1.5]
+        -L Length of long mate-edges [def:100000]
+        -N Number of long-read needed to keep a potencial erroneus mate-edge [def:5]
+        -P Minimum length of reduced paths to convert them to physical fragments [def:20kb]
 
  $0 -h for detailed usage information.
    \n/);
@@ -136,7 +137,7 @@ sub usage {
 
 my %opts = ();
 
-getopts( "x:s:l:p:t:g:a:c:i:k:w:q:m:d:M:L:N:P:hn", \%opts );
+getopts( "x:s:l:p:t:g:a:c:i:k:w:q:m:d:M:L:N:P:R:hn", \%opts );
 #display help usage using the perldoc
 if($opts{h}){
    system("perldoc $0");
@@ -174,12 +175,12 @@ if($opts{x} eq "pacccs" and $opts{a} ne "M"){
 
 #we define number of threads for the pipeline.
 if(!defined $opts{t}){
-  $opts{t}=1;
+  $opts{t}=1;#default is one
 }
 
-# we check the pipeline called
-my $pipeline=();
 
+my $pipeline=();
+# we check the pipeline called
 if($opts{a} eq "M"){
       $pipeline=Wengan::Scheduler::Local->new($reads,"WenganM",%opts);
 }elsif($opts{a} eq "A"){
@@ -193,10 +194,8 @@ if($opts{a} eq "M"){
 	exit 1;
 }
 
-#print Dumper(%opts);
 #print Dumper($pipeline)
-
-#we check if the user want to see the comand being executed
+#we check if the user want to see the pipeline commands
 if($opts{n}){
   $pipeline->show_pipeline();
 }else{
@@ -204,9 +203,7 @@ $pipeline->run();
 }
 
 
-
-
-=head1 LONGREADS PRESETS
+=head1 LONG-READ PRESETS
 
 The presets define several variables of the wengan pipeline execution and depends on the long-read technology used to sequence the genome.
 The recommended long-read coverage is 30X.
@@ -312,6 +309,7 @@ polishing of the assembly.
 Short-contigs options:
 
       -M INT     Minimum contig length in scaffolding [--mcs] (default=`2000', min=`1000')
+      -R FLOAT   Repeat copy number factor [--rcn]  (default=`1.5')
 
 Long-reads overlap options:
 
@@ -319,7 +317,7 @@ Long-reads overlap options:
 
 Validation of lines options:
 
-      -N INT     Number of long-read needed to keep a potencial erroneus mate-edge [--nlm] (default=`5', min=`2')
+      -N INT     Number of long-read needed to keep a potencial erroneus mate-edge [--nlm] (default=`5', min=`1')
       -P INT     Minimum length of reduced paths to convert them to physical fragments [--mlp] (default=`20000', min=`5000')
 
 =cut

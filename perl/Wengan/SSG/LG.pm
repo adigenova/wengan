@@ -107,6 +107,7 @@ sub _def_parameters{
            $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
            $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
            $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
+           $param .= (defined $self->{opts}->{R}) ? " --rcn ".$self->{opts}->{R}:"";
            $self->{maxgis}=10000;#set the insert size that are not inferred 10% of the synthetic
       }elsif($self->{preset} eq "ontlon"){
          #$param = "--mlp 20000";
@@ -114,6 +115,7 @@ sub _def_parameters{
          $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 20000";
          $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
          $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
+         $param .= (defined $self->{opts}->{R}) ? " --rcn ".$self->{opts}->{R}:"";
          $self->{maxgis}=16000;
       }elsif($self->{preset} eq "pacraw"){
             #$param = "--mlp 10000";
@@ -121,6 +123,7 @@ sub _def_parameters{
             $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
             $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
             $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
+            $param .= (defined $self->{opts}->{R}) ? " --rcn ".$self->{opts}->{R}:"";
             $self->{maxgis}=8000;
 
       }elsif($self->{preset} eq "ontraw"){
@@ -129,6 +132,7 @@ sub _def_parameters{
         $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
         $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
         $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
+        $param .= (defined $self->{opts}->{R}) ? " --rcn ".$self->{opts}->{R}:"";
         $self->{maxgis}=16000;
 
       }elsif($self->{preset} eq "pacraw" and $self->{pipeline} eq "M"){
@@ -137,6 +141,7 @@ sub _def_parameters{
             $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
             $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
             $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
+            $param .= (defined $self->{opts}->{R}) ? " --rcn ".$self->{opts}->{R}:"";
             $self->{maxgis}=7000;
       }
 

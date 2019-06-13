@@ -55,7 +55,7 @@ use constant MINIA3_BIN => 'minia3'; #put undef for stop a execution
 use constant ABYSS2_BIN => 'abyss-pe';
 use constant DiscoVarDenovo_BIN => 'disco';
 use constant FM_BIN => '/Users/adigenova/Git/fastmin-sg/fastmin-sg';
-use constant IM_BIN => '/Users/adigenova/Git/intervalmis/intervalmis';
+use constant IM_BIN => '/Users/adigenova/Git/intervalmis/intervalmiss';
 use constant LIGER_BIN => '/Users/adigenova/Git/liger/liger';
 use constant AUXPERL_DIR => '';
 
