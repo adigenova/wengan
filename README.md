@@ -1,3 +1,5 @@
+[![HitCount](http://hits.dwyl.io/adigenova/wengan.svg)](http://hits.dwyl.io/adigenova/wengan)
+
 # Wengan
 An accurate and ultra-fast genome assembler
 
