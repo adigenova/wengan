@@ -81,8 +81,8 @@ preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) tipical
 
 | Genome | Long reads| Short reads|Wengan Mode| NG50 (Mb) | CPU (h) | RAM (Gb) | Fasta file|
 |:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
-|  |  | 2x150bp 50X (GIAB:[rs1][g1],[rs2][g2])| WenganA      | 23.08   | 671     | 45  | [asm][NA12878.WenganA.ONT-ul-rel5.fa.gz]
-| NA12878| ONT 35X ([rel5][rel5]) | 2x150bp 50X (GIAB:[rs1][g1],[rs2][g2])| WenganM     | 16.67   | 185     | 53  | [asm][NA12878.WenganM.ONT-ul-rel5.fa.gz]
+|  |  | 2x150bp 50X (GIAB:[rs1][g1] , [rs2][g2])| WenganA      | 23.08   | 671     | 45  | [asm][NA12878.WenganA.ONT-ul-rel5.fa.gz]
+| NA12878| ONT 35X ([rel5][rel5]) | 2x150bp 50X (GIAB:[rs1][g1] , [rs2][g2])| WenganM     | 16.67   | 185     | 53  | [asm][NA12878.WenganM.ONT-ul-rel5.fa.gz]
 |  |  |  2x250bp 60X (ENA:[rs1][wdsna1] , [rs2][wdsna2])| WenganD      | 33.13   |  550    | 622  | [asm][NA12878.WenganD.ONT-ul-rel5.fa.gz]
 | HG00073   | PAC 90X (ENA:[rl1][ena])| 2x250bp 63X (ENA:[rs1][wdhg1] , [rs2][wdhg2])| WenganD     | 29.2   | 800     | 644  | [asm][HG00733.WenganD.PAC-SequelI.fa.gz]
 | NA24385   | ONT 60X (GIAB:[rl1][giab]) | 2x250bp 70X (GIAB:[rs1][g3])| WenganD     | 48.8   | 910     | 650  | [asm][NA24385.WenganD.ONT-ul-final.fa.gz]
@@ -91,7 +91,7 @@ preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) tipical
 [rel5]: https://github.com/nanopore-wgs-consortium/NA12878/blob/master/nanopore-human-genome/rel5.md
 [t2t]: https://github.com/nanopore-wgs-consortium/CHM13
 [ena]: https://www.ebi.ac.uk/ena/data/view/SRX4480530
-[giab]:ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG002_NA24385_son/Ultralong_OxfordNanopore/final
+[giab]: https://cutt.ly/BekQW1l
 
 [wdsna1]: https://www.ebi.ac.uk/ena/data/view/SRR891258
 [wdsna2]: https://www.ebi.ac.uk/ena/data/view/SRR891259
@@ -100,9 +100,9 @@ preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) tipical
 [wdhg1]: https://www.ebi.ac.uk/ena/data/view/SRR5534476
 [wdhg2]: https://www.ebi.ac.uk/ena/data/view/SRR5534475
 
-[g1]: ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/NA12878/NIST_NA12878_HG001_HiSeq_300x/131219_D00360_006_AH81VLADXX/
-[g2]: ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/NA12878/NIST_NA12878_HG001_HiSeq_300x/131223_D00360_007_BH88WKADXX/
-[g3]: ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG002_NA24385_son/NIST_Illumina_2x250bps/reads/
+[g1]: https://cutt.ly/iekQmOn
+[g2]: https://cutt.ly/EekQWrz
+[g3]: https://cutt.ly/lekQWmZ
 
 [NA12878.WenganA.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/12598666/files/NA12878.WenganA.ONT-ul-rel5.fa.gz?download=1
 [NA12878.WenganM.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/12598666/files/NA12878.WenganM.ONT-ul-rel5.fa.gz?download=1
