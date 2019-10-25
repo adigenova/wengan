@@ -5,7 +5,7 @@ An accurate and ultra-fast genome assembler
 
 # SYNOPSIS
 
-    # Assembling Oxford nanopore and illumina reads wiht WenganM
+    # Assembling Oxford nanopore and illumina reads with WenganM
      wengan.pl -x ontraw -a M -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l ont.fastq.gz -p asm1 -t 20 -g 3000
 
     # Assembling PacBio reads and illumina reads with WenganA
@@ -17,7 +17,7 @@ An accurate and ultra-fast genome assembler
     # Non-hybrid assembly of PacBio Circular Consensus Sequence data with WenganM
      wengan.pl -x pacccs -a M -l ccs.fastq.gz -p asm4 -t 20 -g 3000
 
-    # Assembling ultra-long nanopore reads and Illumina reads with WenganD (requires a high memory machine 600Gb)
+    # Assembling ultra-long nanopore reads and Illumina reads with WenganD (need a high memory machine 600Gb)
      wengan.pl -x ontlon -a D -s lib2.fwd.fastq.gz,lib2.rev.fastq.gz -l ont.fastq.gz -p asm5 -t 20 -g 3000
 
     # Assembling pacraw reads wiht pre-assembled short-read contigs from Minia3
@@ -63,19 +63,19 @@ The recommended long-read coverage is 30X.
 
 ## ontlon
 
-preset for raw ultra-long-reads from Oxford Nanopore, tipically having an  N50 > 50kb.
+preset for raw ultra-long-reads from Oxford Nanopore, typically with an  N50 > 50kb.
 
 ## ontraw
 
-preset for raw long-reads Nanopore reads tipically having an  N50 ~\[15kb-40kb\].
+preset for raw long-reads Nanopore reads typically with an  N50 ~\[15kb-40kb\].
 
 ## pacraw
 
-preset for raw long-reads from Pacific Bioscience (PacBio) tipically having an  N50 ~\[8kb-60kb\].
+preset for raw long-reads from Pacific Bioscience (PacBio) typically with an  N50 ~\[8kb-60kb\].
 
-## pacccs
+## pacccs (experimental)
 
-preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) tipically having an  N50 ~\[15kb\].
+preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) typically with an N50 ~\[15kb\]. This type of data is not fully supported yet.
 
 # Wengan benchmark
 
