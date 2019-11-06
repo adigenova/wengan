@@ -104,14 +104,14 @@ preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) typical
 [g2]: https://cutt.ly/EekQWrz
 [g3]: https://cutt.ly/lekQWmZ
 
-[NA12878.WenganA.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/12598666/files/NA12878.WenganA.ONT-ul-rel5.fa.gz?download=1
-[NA12878.WenganM.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/12598666/files/NA12878.WenganM.ONT-ul-rel5.fa.gz?download=1
-[NA12878.WenganD.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/12598666/files/NA12878.WenganD.ONT-ul-rel5.fa.gz?download=1
-[CHM13.WenganD.ONT-T2T-rel2.fa.gz]: https://zenodo.org/record/12598666/files/CHM13.WenganD.ONT-T2T-rel2.fa.gz?download=1
-[NA24385.WenganD.ONT-ul-final.fa.gz]: https://zenodo.org/record/12598666/files/NA24385.WenganD.ONT-ul-final.fa.gz?download=1
-[HG00733.WenganD.PAC-SequelI.fa.gz]: https://zenodo.org/record/12598666/files/HG00733.WenganD.PAC-SequelI.fa.gz?download=1
+[NA12878.WenganA.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/2598666/files/NA12878.WenganA.ONT-ul-rel5.fa.gz?download=1
+[NA12878.WenganM.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/2598666/files/NA12878.WenganM.ONT-ul-rel5.fa.gz?download=1
+[NA12878.WenganD.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/2598666/files/NA12878.WenganD.ONT-ul-rel5.fa.gz?download=1
+[CHM13.WenganD.ONT-T2T-rel2.fa.gz]: https://zenodo.org/record/2598666/files/CHM13.WenganD.ONT-T2T-rel2.fa.gz?download=1
+[NA24385.WenganD.ONT-ul-final.fa.gz]: https://zenodo.org/record/2598666/files/NA24385.WenganD.ONT-ul-final.fa.gz?download=1
+[HG00733.WenganD.PAC-SequelI.fa.gz]: https://zenodo.org/record/2598666/files/HG00733.WenganD.PAC-SequelI.fa.gz?download=1
 
-The assemblies generated using Wengan can be downloaded from [Zenodo](https://zenodo.org/record/12598666).
+The assemblies generated using Wengan can be downloaded from [Zenodo](https://zenodo.org/record/2598666).
 All the assemblies were ran as described in the wengan preprint. NG50 was caculated using a genome size of 3.14Gb.
 
 # Wengan components
