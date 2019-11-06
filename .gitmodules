@@ -1,0 +1,21 @@
+[submodule "components/intervalmiss"]
+	path = components/intervalmiss
+	url = https://github.com/adigenova/intervalmiss.git
+[submodule "components/seqtk"]
+	path = components/seqtk
+	url = https://github.com/adigenova/seqtk.git
+[submodule "components/liger"]
+	path = components/liger
+	url = https://github.com/adigenova/liger.git
+[submodule "components/fastmin-sg"]
+	path = components/fastmin-sg
+	url = https://github.com/adigenova/fastmin-sg.git
+[submodule "components/discovarexp-51885"]
+	path = components/discovarexp-51885
+	url = https://github.com/adigenova/discovarexp-51885.git
+[submodule "components/minia"]
+	path = components/minia
+	url = https://github.com/GATB/minia.git
+[submodule "components/abyss"]
+	path = components/abyss
+	url = https://github.com/bcgsc/abyss.git
