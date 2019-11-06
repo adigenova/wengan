@@ -50,14 +50,14 @@ Set of perl scripts that performs diferents task for the correct work of Wengan.
 
 =cut
 
-use constant SEQTK_BIN => '/Users/adigenova/Git/seqtk/seqtk';
-use constant MINIA3_BIN => 'minia3'; #put undef for stop a execution
-use constant ABYSS2_BIN => 'abyss-pe';
-use constant DiscoVarDenovo_BIN => 'disco';
-use constant FM_BIN => '/Users/adigenova/Git/fastmin-sg/fastmin-sg';
-use constant IM_BIN => '/Users/adigenova/Git/intervalmis/intervalmiss';
-use constant LIGER_BIN => '/Users/adigenova/Git/liger/liger';
-use constant AUXPERL_DIR => '';
+use constant SEQTK_BIN => $ENV{WROOTDIR}.'/bin/seqtk';
+use constant MINIA3_BIN =>$ENV{WROOTDIR}.'/bin/minia'; #put undef for stop a execution
+use constant ABYSS2_BIN => $ENV{WROOTDIR}.'/bin/abyss-pe';
+use constant DiscoVarDenovo_BIN => $ENV{WROOTDIR}.'/bin/DiscovarExp';
+use constant FM_BIN => $ENV{WROOTDIR}.'/bin/fastmin-sg';
+use constant IM_BIN => $ENV{WROOTDIR}.'/bin/intervalmiss';
+use constant LIGER_BIN => $ENV{WROOTDIR}.'/bin/liger';
+use constant AUXPERL_DIR => $ENV{WROOTDIR}.'/aux_scripts/';
 
 use strict;
 use warnings;

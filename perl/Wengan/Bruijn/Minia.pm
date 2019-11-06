@@ -113,6 +113,10 @@ sub _create_jobs_long{
         "2>",$self->{prefix}.".minia.".$params->{MK}[$i].".err",
         ">",$self->{prefix}.".minia.".$params->{MK}[$i].".log");
         push(@{$job->{cmds}},join(" ",MINIA3_BIN,@mopt));
+	#we add commands to clean minia tmp files 
+	push(@{$job->{cmds}},join(" ","-rm -f","$self->{prefix}.minia.$k.unitigs.fa.glue*",
+				               "$self->{prefix}.minia.$k.h5",
+					       "$self->{prefix}.minia.$k.unitigs.fa"));
         push(@{$self->{jobs}},$job);
     }
     # we add the target coverage file
@@ -168,6 +172,10 @@ sub _create_jobs_short{
         "2>",$self->{prefix}.".minia.".$params->{MK}[$i].".err",
         ">",$self->{prefix}.".minia.".$params->{MK}[$i].".log");
         push(@{$job->{cmds}},join(" ",MINIA3_BIN,@mopt));
+	#we add commands to clean minia tmp files 
+	push(@{$job->{cmds}},join(" ","-rm -f","$self->{prefix}.minia.$k.unitigs.fa.glue*",
+				               "$self->{prefix}.minia.$k.h5",
+					       "$self->{prefix}.minia.$k.unitigs.fa"));
         push(@{$self->{jobs}},$job);
     }
     # we set the main target to the contigs files

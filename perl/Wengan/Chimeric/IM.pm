@@ -140,7 +140,7 @@ sub _def_parameters{
       }
       #means WenganM pipeline, we have to provide the coverage minia3 file
       if($self->{pipeline} eq "M"){
-          $param.=" -b ".$self->{prefix}.".minia.121.contigs.cov.txt";
+          $param.=" --fst 0.1 -b ".$self->{prefix}.".minia.121.contigs.cov.txt";
       }
       return $param;
 }

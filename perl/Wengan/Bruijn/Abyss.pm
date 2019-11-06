@@ -8,7 +8,7 @@ sub new{
 
 
   #minimum variables for Abyss2
-  my $self = {contigs=>undef,cores=>$opts{t},prefix=>$opts{p}, preset=>$opts{x}};
+  my $self = {contigs=>undef,cores=>$opts{t},prefix=>$opts{p}, preset=>$opts{x}, gs=>$opts{g}};
   #we ask if the contigs are passed
   if(defined $opts{c}){
     $self->{contigs}=$opts{c};
@@ -57,9 +57,16 @@ sub _def_parameters{
       #np=20 k=128
       #B=40G H=4 kc=3 v=-v contigs 2>abyss60X.err >abyss60X.log
       #lib="pea peb" pea="SRR5534476_1.fastq.gz SRR5534476_2.fastq.gz" peb="SRR5534475_1.fastq.gz SRR5534475_2.fastq.gz"
-      my $param="k=96  B=40G H=4 kc=3 v=-v ";
+      #larger genomes
+      my $b=40;#default bloom filter for >0.5Gb genomes
+      #mid size genomes
+      $b=20 if($self->{gs} <500);#20Gb
+      #bacterial genomes
+      $b=1 if($self->{gs} <10);#1Gb
+
+      my $param="k=96 B=".$b."G H=4 kc=3 v=-v ";
       if($rlen >=200){
-        $param="k=128 B=40G H=4 kc=3 v=-v ";
+        $param="k=128 B=".$b."G H=4 kc=3 v=-v ";
       }
       return $param;
 }

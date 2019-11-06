@@ -51,12 +51,24 @@ sub new{
   return ($self);
 }
 
+sub check_read_file{
+	my ($self,$f)=@_;
+	if(-s $f){
+		#file exist and has nnon zero-size
+	 }else{
+		print "ERROR: read file $f don't exist or have 0 size.\n";
+		exit 1;
+        }
+}
+
+
 sub add_long_reads{
 	my ($self,$files)=@_;
 	chomp $files;
 	my @files=split(",",$files);
 	#we add the short-reads files
 	for(my $i=0; $i<=$#files; $i++){
+		$self->check_read_file($files[$i]);
 		$self->add_long($files[$i]);
 	}
 }
@@ -79,6 +91,8 @@ sub add_short_reads{
 	my @files=split(",",$files);
 	#we add the short-reads files
 	for(my $i=0; $i<$#files; $i+=2){
+		$self->check_read_file($files[$i]);
+		$self->check_read_file($files[$i+1]);
 		$self->add_pair($files[$i],$files[$i+1]);
 	}
 }
@@ -87,7 +101,7 @@ sub add_short_reads{
 sub add_pair{
 	my ($self,$fwd,$rev)=@_;
 	if($fwd eq $rev){
-		print $fwd." ".$rev." are the same\n";
+		print "ERROR:fwd[$fwd] and rev[$rev] are the same file\n";
 		exit 1;
 	}
 

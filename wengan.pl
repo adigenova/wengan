@@ -84,11 +84,14 @@ use strict;
 use Data::Dumper;
 use Getopt::Std;
 use FindBin;
+#we set the Wengan root directory
+$ENV{WROOTDIR}="$FindBin::Bin";
 #load the wengan library
 use lib "$FindBin::Bin/perl";
 #local perl clases to control the wengan execution
 use Wengan::Reads; # class to handle the read data.
 use Wengan::Scheduler::Local; # the scheduler is make and control the execution end-to-end
+
 
 sub usage {
    die(qq/
@@ -134,7 +137,6 @@ sub usage {
 }
 
 #x:s:l:p:t:g:a:c:i:k:w:q:m:d:M:L:N:P:hn
-
 my %opts = ();
 
 getopts( "x:s:l:p:t:g:a:c:i:k:w:q:m:d:M:L:N:P:R:hn", \%opts );
@@ -144,8 +146,8 @@ if($opts{h}){
    exit 0;
 }
 
-#mandatory variables
-if (!defined $opts{x} or !defined $opts{l} or !defined $opts{g}) {
+#mandatory variables mode, long-reads, short-reads and genome size.
+if (!defined $opts{x} or !defined $opts{l} or !defined $opts{s} or !defined $opts{g}) {
    usage;
 }
 
