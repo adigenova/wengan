@@ -122,6 +122,30 @@ All the assemblies were ran as described in the wengan preprint. NG50 was cacula
 
 <img src="./wengan-diagram.svg">
 
+# Getting the latest source code
+## Instructions
+
+
+It is recommended to use/download the latest binary release (Linux) from :
+https://github.com/adigenova/wengan/releases
+
+### Building Wengan from source
+
+To compile Wengan run the following command:
+
+```bash
+#fetch wengan and its components
+git clone --recursive https://github.com/adigenova/wengan.git wengan
+```
+
+There are specific instruction for each wengan component. 
+After compilation you have to copy the binaries to wengan-dir/bin. 
+
+#### Requirements
+c++ compiler; compilation was tested with gcc version GCC/7.3.0-2.30 (Linux) and clang-1000.11.45.5 (Mac OSX).
+cmake 3.2+.
+
+
 # About the name
 **Wengan** is a [Mapudungun](https://en.wikipedia.org/wiki/Mapuche_language) word. The Mapudungun is the language of the [**Mapuche**](https://en.wikipedia.org/wiki/Mapuche) people, the largest indigenous inhabitants of south-central Chile. **Wengan** means "***Making the path***".
 
