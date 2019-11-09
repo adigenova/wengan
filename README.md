@@ -22,22 +22,22 @@ An accurate and ultra-fast genome assembler
     # Assembling ultra-long nanopore reads and Illumina reads with WenganD (need a high memory machine 600Gb)
      wengan.pl -x ontlon -a D -s lib2.fwd.fastq.gz,lib2.rev.fastq.gz -l ont.fastq.gz -p asm5 -t 20 -g 3000
 
-    # Assembling pacraw reads wiht pre-assembled short-read contigs from Minia3
+    # Assembling pacraw reads with pre-assembled short-read contigs from Minia3
      wengan.pl -x pacraw -a M -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l pac.fastq.gz -p asm6 -t 20 -g 3000 -c contigs.minia.fa
 
-    # Assembling pacraw reads wiht pre-assembled short-read contigs from Abyss
+    # Assembling pacraw reads with pre-assembled short-read contigs from Abyss
      wengan.pl -x pacraw -a A -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l pac.fastq.gz -p asm7 -t 20 -g 3000 -c contigs.abyss.fa
 
-    # Assembling pacraw reads wiht pre-assembled short-read contigs from DiscovarDenovo
+    # Assembling pacraw reads with pre-assembled short-read contigs from DiscovarDenovo
      wengan.pl -x pacraw -a D -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l pac.fastq.gz -p asm8 -t 20 -g 3000 -c contigs.disco.fa
 
-# DESCRIPTION
+# Description
 
 **Wengan** is a new genome assembler that unlike most of the current long-reads assemblers avoid entirely the all-vs-all read comparison.
 The key idea behind **Wengan** is that long-read alignments can be **inferred by building paths** on a sequence graph. To achieve this, **Wengan** build a new sequence graph called the Synthetic Scaffolding Graph. The SSG is build from a spectrum of synthetic mate-pair libraries extracted from raw long-reads. Then, longer alignments are build by peforming a transitive reduction of the edges.
 Another distinct feature of **Wengan** is that perform **self-validation** by following the read information. **Wengan** identify miss-assemblies at differents steps of the assembly process. For more information about the algorithmic ideas behind **Wengan** please read the preprint available on bioRxiv.
 
-# SHORT-READ ASSEMBLY
+# Short-read Assembly
 
 **Wengan** uses a de bruijn graph assembler to build the assembly backbone from short-read data.
 Currently, **Wengan** can use **Minia3**, **Abyss2** or **DiscoVarDenovo**.  The recomended short-read coverage
@@ -58,7 +58,7 @@ in less than 40Gb of RAM (~900 CPU hours). This assembly mode takes  ~2 days whe
 This **Wengan** mode use the **DiscovarDenovo** short-read assembler, this is the greedier memory mode of **Wengan** and for assembling a complete human genome need about 600Gb of RAM (~900 CPU hours).
 This assembly mode takes ~2 days when using 20 CPUs on a single machine.
 
-# LONGREADS PRESETS
+# Long-read presets
 
 The presets define several variables of the wengan pipeline execution and depends on the long-read technology used to sequence the genome.
 The recommended long-read coverage is 30X.
@@ -125,14 +125,12 @@ All the assemblies were ran as described in the wengan preprint. NG50 was cacula
 <img src="./wengan-diagram.svg">
 
 # Getting the latest source code
+
 ## Instructions
-
-
 It is recommended to use/download the latest binary release (Linux) from :
 https://github.com/adigenova/wengan/releases
 
 ### Building Wengan from source
-
 To compile Wengan run the following command:
 
 ```bash
@@ -146,7 +144,6 @@ After compilation you have to copy the binaries to wengan-dir/bin.
 #### Requirements
 c++ compiler; compilation was tested with gcc version GCC/7.3.0-2.30 (Linux) and clang-1000.11.45.5 (Mac OSX).
 cmake 3.2+.
-
 
 # About the name
 **Wengan** is a [Mapudungun](https://en.wikipedia.org/wiki/Mapuche_language) word. The Mapudungun is the language of the [**Mapuche**](https://en.wikipedia.org/wiki/Mapuche) people, the largest indigenous inhabitants of south-central Chile. **Wengan** means "***Making the path***".
