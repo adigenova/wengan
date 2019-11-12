@@ -33,34 +33,33 @@ An accurate and ultra-fast genome assembler
 
 # Description
 
-**Wengan** is a new genome assembler that unlike most of the current long-reads assemblers avoid entirely the all-vs-all read comparison.
-The key idea behind **Wengan** is that long-read alignments can be **inferred by building paths** on a sequence graph. To achieve this, **Wengan** build a new sequence graph called the Synthetic Scaffolding Graph. The SSG is build from a spectrum of synthetic mate-pair libraries extracted from raw long-reads. Then, longer alignments are build by peforming a transitive reduction of the edges.
-Another distinct feature of **Wengan** is that perform **self-validation** by following the read information. **Wengan** identify miss-assemblies at differents steps of the assembly process. For more information about the algorithmic ideas behind **Wengan** please read the preprint available on bioRxiv.
+**Wengan** is a new genome assembler that unlike most of the current long-reads assemblers avoids entirely the all-vs-all read comparison.
+The key idea behind **Wengan** is that long-read alignments can be **inferred by building paths** on a sequence graph. To achieve this, **Wengan** builds a new sequence graph called the Synthetic Scaffolding Graph. The SSG is built from a spectrum of synthetic mate-pair libraries extracted from raw long-reads. Longer alignments are then built by peforming a transitive reduction of the edges.
+Another distinct feature of **Wengan** is that it performs **self-validation** by following the read information. **Wengan** identifies miss-assemblies at differents steps of the assembly process. For more information about the algorithmic ideas behind **Wengan** please read the preprint available in bioRxiv.
 
-# Short-read Assembly
+# Short-read assembly
 
-**Wengan** uses a de bruijn graph assembler to build the assembly backbone from short-read data.
-Currently, **Wengan** can use **Minia3**, **Abyss2** or **DiscoVarDenovo**.  The recomended short-read coverage
-is **50-60X** of 150bp x 2 or 250bp x 2 short reads.
+**Wengan** uses a de Bruijn graph assembler to build the assembly backbone from short-read data.
+Currently, **Wengan** can use **Minia3**, **Abyss2** or **DiscoVarDenovo**.  The recommended short-read coverage
+is **50-60X** of 2 x 150bp or 2 x 250bp  reads.
 
 ## WenganM \[M\]
 
-This **Wengan** mode use the **Minia3** short-read assembler, this is the fastest mode of **Wengan** and can assemble a complete human genome
-in less than 210 CPU hours (~50Gb of RAM).
+This **Wengan** mode uses the **Minia3** short-read assembler. This is the fastest mode of **Wengan** and can assemble a complete human genome in less than 210 CPU hours (~50Gb of RAM).
 
 ## WenganA \[A\]
 
-This **Wengan** mode use the **Abyss2** short-read assembler, this is the lowest memory mode of **Wengan** and can assemble a complete human genome
+This **Wengan** mode uses the **Abyss2** short-read assembler, this is the lowest memory mode of **Wengan** and can assemble a complete human genome
 in less than 40Gb of RAM (~900 CPU hours). This assembly mode takes  ~2 days when using 20 CPUs on a single machine.
 
 ## WenganD \[D\]
 
-This **Wengan** mode use the **DiscovarDenovo** short-read assembler, this is the greedier memory mode of **Wengan** and for assembling a complete human genome need about 600Gb of RAM (~900 CPU hours).
+This **Wengan** mode uses the **DiscovarDenovo** short-read assembler, this is the greedier memory mode of **Wengan** and for assembling a complete human genome needs about 600Gb of RAM (~900 CPU hours).
 This assembly mode takes ~2 days when using 20 CPUs on a single machine.
 
 # Long-read presets
 
-The presets define several variables of the wengan pipeline execution and depends on the long-read technology used to sequence the genome.
+The presets define several variables of the wengan pipeline execution and depend on the long-read technology used to sequence the genome.
 The recommended long-read coverage is 30X.
 
 ## ontlon
@@ -69,7 +68,7 @@ preset for raw ultra-long-reads from Oxford Nanopore, typically with an  N50 > 5
 
 ## ontraw
 
-preset for raw long-reads Nanopore reads typically with an  N50 ~\[15kb-40kb\].
+preset for raw Nanopore reads typically with an N50 ~\[15kb-40kb\].
 
 ## pacraw
 
@@ -114,10 +113,10 @@ preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) typical
 [HG00733.WenganD.PAC-SequelI.fa.gz]: https://zenodo.org/record/2598666/files/HG00733.WenganD.PAC-SequelI.fa.gz?download=1
 
 The assemblies generated using Wengan can be downloaded from [Zenodo](https://zenodo.org/record/2598666).
-All the assemblies were ran as described in the wengan preprint. NG50 was caculated using a genome size of 3.14Gb.
+All the assemblies were ran as described in the Wengan preprint. NG50 was computed using a genome size of 3.14Gb.
 
 # Wengan components
-+ A bruijn graph assembler ([Minia](https://github.com/GATB/minia), [Abyss](https://github.com/bcgsc/abyss) or [DiscovarDenovo](https://software.broadinstitute.org/software/discovar/blog/))
++ A de Bruijn graph assembler ([Minia](https://github.com/GATB/minia), [Abyss](https://github.com/bcgsc/abyss) or [DiscovarDenovo](https://software.broadinstitute.org/software/discovar/blog/))
 + [FastMIN-SG](https://github.com/adigenova/fastmin-sg)
 + [IntervalMiss](https://github.com/adigenova/intervalmiss)
 + [Liger](https://github.com/adigenova/liger)
@@ -134,11 +133,11 @@ https://github.com/adigenova/wengan/releases
 To compile Wengan run the following command:
 
 ```bash
-#fetch wengan and its components
+#fetch Wengan and its components
 git clone --recursive https://github.com/adigenova/wengan.git wengan
 ```
 
-There are specific instruction for each wengan component. 
+There are specific instructions for each Wengan component. 
 After compilation you have to copy the binaries to wengan-dir/bin. 
 
 #### Requirements
@@ -146,5 +145,5 @@ c++ compiler; compilation was tested with gcc version GCC/7.3.0-2.30 (Linux) and
 cmake 3.2+.
 
 # About the name
-**Wengan** is a [Mapudungun](https://en.wikipedia.org/wiki/Mapuche_language) word. The Mapudungun is the language of the [**Mapuche**](https://en.wikipedia.org/wiki/Mapuche) people, the largest indigenous inhabitants of south-central Chile. **Wengan** means "***Making the path***".
+**Wengan** is a [Mapudungun](https://en.wikipedia.org/wiki/Mapuche_language) word. Mapudungun is the language of the [**Mapuche**](https://en.wikipedia.org/wiki/Mapuche) people, the largest indigenous inhabitants of south-central Chile. **Wengan** means "***Making the path***".
 
