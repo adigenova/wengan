@@ -147,3 +147,5 @@ cmake 3.2+.
 # About the name
 **Wengan** is a [Mapudungun](https://en.wikipedia.org/wiki/Mapuche_language) word. Mapudungun is the language of the [**Mapuche**](https://en.wikipedia.org/wiki/Mapuche) people, the largest indigenous inhabitants of south-central Chile. **Wengan** means "***Making the path***".
 
+# Citation
+Alex Di Genova, Elena Buena-Atienza, Stephan Ossowski, Marie-France Sagot. **Wengan: Efficient and high quality hybrid de novo assembly of human genomes.** BioRxiv,  [link](https://www.biorxiv.org/content/10.1101/840447v1)
