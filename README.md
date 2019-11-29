@@ -144,6 +144,10 @@ After compilation you have to copy the binaries to wengan-dir/bin.
 c++ compiler; compilation was tested with gcc version GCC/7.3.0-2.30 (Linux) and clang-1000.11.45.5 (Mac OSX).
 cmake 3.2+.
 
+# Limitations
+
+    1.- Genomes larger than 4Gb are not supported yet.
+    
 # About the name
 **Wengan** is a [Mapudungun](https://en.wikipedia.org/wiki/Mapuche_language) word. Mapudungun is the language of the [**Mapuche**](https://en.wikipedia.org/wiki/Mapuche) people, the largest indigenous inhabitants of south-central Chile. **Wengan** means "***Making the path***".
 
