@@ -5,6 +5,31 @@
 # Wengan
 An accurate and ultra-fast genome assembler
 
+
+Table of Contents
+=================
+
+   * [SYNOPSIS](#synopsis)
+   * [Description](#description)
+   * [Short-read assembly](#short-read-assembly)
+      * [WenganM [M]](#wenganm-m)
+      * [WenganA [A]](#wengana-a)
+      * [WenganD [D]](#wengand-d)
+   * [Long-read presets](#long-read-presets)
+      * [ontlon](#ontlon)
+      * [ontraw](#ontraw)
+      * [pacraw](#pacraw)
+      * [pacccs (experimental)](#pacccs-experimental)
+   * [Wengan benchmark](#wengan-benchmark)
+   * [Wengan components](#wengan-components)
+   * [Getting the latest source code](#getting-the-latest-source-code)
+      * [Instructions](#instructions)
+         * [Building Wengan from source](#building-wengan-from-source)
+            * [Requirements](#requirements)
+   * [Limitations](#limitations)
+   * [About the name](#about-the-name)
+   * [Citation](#citation)
+
 # SYNOPSIS
 
     # Assembling Oxford nanopore and illumina reads with WenganM
