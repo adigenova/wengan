@@ -20,6 +20,7 @@ Table of Contents
       * [ontraw](#ontraw)
       * [pacraw](#pacraw)
       * [pacccs (experimental)](#pacccs-experimental)
+   * [Wengan demo](#wengan-demo)
    * [Wengan benchmark](#wengan-benchmark)
    * [Wengan components](#wengan-components)
    * [Getting the latest source code](#getting-the-latest-source-code)
@@ -102,6 +103,9 @@ preset for raw long-reads from Pacific Bioscience (PacBio) typically with an  N5
 ## pacccs (experimental)
 
 preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) typically with an N50 ~\[15kb\]. This type of data is not fully supported yet.
+
+# Wengan demo
+Tne repository [wengan_demo](https://github.com/adigenova/wengan_demo) constains a small dataset and instruction to test Wengan (version 0.1).
 
 # Wengan benchmark
 
