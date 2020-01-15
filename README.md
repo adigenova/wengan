@@ -178,6 +178,17 @@ After compilation you have to copy the binaries to wengan-dir/bin.
 c++ compiler; compilation was tested with gcc version GCC/7.3.0-2.30 (Linux) and clang-1000.11.45.5 (Mac OSX).
 cmake 3.2+.
 
+#### Specific component source code versions used to build Wengan v0.1
+
+1. abyss commit [d4b4b5d](https://github.com/bcgsc/abyss/tree/d4b4b5d3091d90a4967180d987bd7168dbf04585)
+2. discovarexp-51885 commit  [f827bab](https://github.com/adigenova/discovarexp-51885/tree/f827bab9bd0e328fee3dd57b7fefebfeebd92be4)
+3. minia commit [017d23e](https://github.com/GATB/minia/tree/017d23e60d56db183c499bb2241345e95514ebbe)
+4. fastmin-sg commit [710aea0](https://github.com/adigenova/fastmin-sg/tree/710aea0b970fa6c7482499e5479927fabbad34fe)
+5. intervalmiss commit [bb884c4](https://github.com/adigenova/intervalmiss/tree/bb884c4bf408880fd3acb6621e148e57ad6f695d)
+6. liger commit [82658bc](https://github.com/adigenova/liger/tree/82658bcc2adde729d05b90faf17d0a22c500189c)
+7. seqtk commit [2efd0c8](https://github.com/adigenova/seqtk/tree/2efd0c85767b2e8ae2366d7ea7edb8041adb0eb1)
+
+
 # Limitations
 
     1.- Genomes larger than 4Gb are not supported yet.
