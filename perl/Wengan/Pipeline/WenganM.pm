@@ -22,7 +22,7 @@ use Module::Load;
 
 #my @tools_name=("Wengan::Bruijn::Minia","Wengan::Mapper::FMS","Wengan::Chimeric::IM","Wengan::Mapper::FML","Wengan::SSG::LG");
 my @tools_name=("Wengan::Bruijn::Minia","Wengan::Mapper::FMS","Wengan::Chimeric::IM","Wengan::Mapper::FML","Wengan::SSG::LG");
-#my @tools_once=("Init","IndexWenganM");
+
 
 my %data=(
 	tools=>[],

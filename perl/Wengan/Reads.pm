@@ -63,27 +63,41 @@ sub check_read_file{
 
 
 sub add_long_reads{
-	my ($self,$files)=@_;
+	my ($self,$files,$type)=@_;
 	chomp $files;
 	my @files=split(",",$files);
+  if(length($type)==0){
+    $type="long";
+  }
 	#we add the short-reads files
 	for(my $i=0; $i<=$#files; $i++){
 		$self->check_read_file($files[$i]);
-		$self->add_long($files[$i]);
+		$self->add_long($files[$i],$type);
 	}
 }
 
 sub add_long{
-	my ($self,$file)=@_;
+	my ($self,$file,$type)=@_;
 	my $tmp=();
 	$tmp->{long}=$file;
-	$tmp->{type}="long";
+	$tmp->{type}=$type;#def "long" or "ccs"
 	$tmp->{path}=_get_dir($file);
 	$tmp->{len}=_guess_read_length($file);
 	#we store the pair end information
 	push(@{$self->{lreads}},$tmp);
 }
 
+
+sub get_hifi{
+   my ($self)=@_;
+   my $hifi=();
+   foreach my $r(@{$self->{lreads}}){
+     if($r->{type} eq "ccs"){
+        push(@{$hifi},$r);
+     }
+   }
+   return $hifi;
+}
 
 sub add_short_reads{
 	my ($self,$files)=@_;

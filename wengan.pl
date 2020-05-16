@@ -22,8 +22,8 @@ B<Wengan> - An accurate and ultrafast genome assembler
   # Assembling ultra-long nanopore reads and BGI reads with WenganM
    wengan.pl -x ontlon -a M -s lib2.fwd.fastq.gz,lib2.rev.fastq.gz -l ont.fastq.gz -p asm3 -t 20 -g 3000
 
-  # Non-hybrid assembly of PacBio Circular Consensus Sequence data with WenganM
-   wengan.pl -x pacccs -a M -l ccs.fastq.gz -p asm4 -t 20 -g 3000
+  # Hybrid long-read only assembly of PacBio Circular Consensus Sequence and Nanopore data with WenganM
+   wengan.pl -x ccsont -a M -l ont.fastq.gz -b ccs.fastq.gz -p asm4 -t 20 -g 3000
 
   # Assembling ultra-long nanopore reads and Illumina reads with WenganD (requires a high memory machine 600Gb)
    wengan.pl -x ontlon -a D -s lib2.fwd.fastq.gz,lib2.rev.fastq.gz -l ont.fastq.gz -p asm5 -t 20 -g 3000
@@ -81,7 +81,7 @@ This assembly mode takes ~2 days when using 20 CPUs on a single machine.
 
 ### We start coding
 use strict;
-use Data::Dumper;
+#use Data::Dumper;
 use Getopt::Std;
 use FindBin;
 #we set the Wengan root directory
@@ -102,10 +102,11 @@ sub usage {
   Wengan options:
 
    Mandatory options***:
-      -x preset [ontlon,ontraw,pacraw,pacccs]
+      -x preset [ontlon,ontraw,pacraw,ccsont,ccspac]
       -a Mode [M,A,D]
-      -s short-reads [fwd1.fastq.gz,rev1.fastq.gz..]
-      -l long-reads.fq.gz
+      -s Short-reads [fwd1.fastq.gz,rev1.fastq.gz..]
+      -l Long-reads.fq.gz
+      -b Hifi-reads [hifi.fq.gz,hifi2.fq.gz..]
       -g 3000 [genome size in Mb]
       -p prefix
 
@@ -113,7 +114,8 @@ sub usage {
       -h [detail information]
       -t cores [1]
       -c <pre-assembled short-read contigs>
-      -i <insert size lists>
+      -i <insert size lists for raw long-reads>
+      -I <insert size list for CCS reads>
       -n <show pipeline comands>;
 
    Advanced Options (Change the presets):
@@ -124,12 +126,18 @@ sub usage {
         -m moving window [150]
       IntervalMiss options:
         -d Minimum base coverage [def:7]
+        -f Factor to compute std using avg*fst [def:0.1]
       Liger options:
-        -M Minimum contig length in backbone [def:2000]
+        -M Minimum contig length in TR [def:2000]
         -R Repeat copy number factor [def:1.5]
         -L Length of long mate-edges [def:100000]
         -N Number of long-read needed to keep a potencial erroneus mate-edge [def:5]
         -P Minimum length of reduced paths to convert them to physical fragments [def:20kb]
+        -Q Minimum contig length in matching [def:2000]
+        -U Repeat copy number factor backbone [def:1.5]
+        -T Number of iterations in TR per edge [def:1M]
+        HiFi options:
+        -D Ploidy for Hifi hybrid assembly [haploid=1,diploid=2]
 
  $0 -h for detailed usage information.
    \n/);
@@ -139,7 +147,7 @@ sub usage {
 #x:s:l:p:t:g:a:c:i:k:w:q:m:d:M:L:N:P:hn
 my %opts = ();
 
-getopts( "x:s:l:p:t:g:a:c:i:k:w:q:m:d:M:L:N:P:R:hn", \%opts );
+getopts( "x:s:l:p:t:g:a:b:c:f:i:I:k:w:q:m:d:M:L:N:P:R:K:D:Q:U:T:hn", \%opts );
 #display help usage using the perldoc
 if($opts{h}){
    system("perldoc $0");
@@ -147,7 +155,8 @@ if($opts{h}){
 }
 
 #mandatory variables mode, long-reads, short-reads and genome size.
-if (!defined $opts{x} or !defined $opts{l} or !defined $opts{s} or !defined $opts{g}) {
+#if (!defined $opts{x} or !defined $opts{l} or !defined $opts{s} or !defined $opts{g}) {
+if(!defined $opts{x} or !defined $opts{l} or !defined $opts{g}){
    usage;
 }
 
@@ -164,21 +173,47 @@ if($opts{x} eq "ontlon"){
 	wengan_pacraw($reads,%opts);
 }elsif($opts{x} eq "pacccs"){
 	wengan_pacccs($reads,%opts);
+}elsif($opts{x} eq "ccsont" or $opts{x} eq "ccspac"){
+	wengan_ccslong($reads,%opts);
 }else{
 	print "Unkown preset $opts{x}\n";
 	usage();
 	exit 1;
 }
 
-if($opts{x} eq "pacccs" and $opts{a} ne "M"){
-  print "Currently only the WenganM pipeline is available for Circular Consensus Sequence (CCS) data\n";
+#check that WenganM is called for hybrid assembly with CCS
+if($opts{x}=~m/ccs/ and $opts{a} ne "M"){
+  print "Currently only the WenganM pipeline is available for Hybrid assembly with
+  Circular Consensus Sequence (CCS) data\n";
+  print " and have been only tested on haploid genomes\n";
   exit 1;
 }
+
+if (defined $opts{D} && $opts{D} !=1){
+    print "WARNING :: Hybrid pipeline with CCS reads have been tested only in haploid genomes\n";
+}
+#we mark the haploid case has default
+if(!defined $opts{D}){
+  $opts{D}=1;
+}
+
 
 #we define number of threads for the pipeline.
 if(!defined $opts{t}){
   $opts{t}=1;#default is one
 }
+
+#we check some variables Q <= M
+if(defined $opts{M} and !defined $opts{Q}){
+  $opts{Q}=$opts{M};
+}
+
+
+if((defined $opts{M} and defined $opts{Q}) and ($opts{Q} > $opts{M})){
+    print "Q should be <= than M; given values [Q=".$opts{Q}.",M=".$opts{M}."]\n";
+    exit 1;
+}
+
 
 
 my $pipeline=();
@@ -254,6 +289,24 @@ sub wengan_pacraw{
 
 }
 
+=head2	ccsont/ccspac
+
+preset for Hybrid assembly of Circular Consensus Sequences from Pacific Bioscience (PacBio) tipically having an  N50 ~[15kb].
+The current version has been tested only in haploid human genomes.
+
+=cut
+
+sub wengan_ccslong{
+  my ($reads,%opts)=@_;
+  #we add the long-reads
+	$reads->add_long_reads($opts{l},"long");
+  #we add the ccs reads
+  $reads->add_long_reads($opts{b},"ccs");
+  #print Dumper($reads);
+}
+
+
+
 
 =head2	pacccs
 
@@ -264,7 +317,6 @@ preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) tipical
 sub wengan_pacccs{
   my ($reads,%opts)=@_;
 	$reads->add_long_reads($opts{l});
-  #print Dumper($reads);
 }
 
 

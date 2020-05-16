@@ -26,7 +26,7 @@ sub new{
 	}
 
   #minimum variables for FastMin-SG
-  my $self = {contigs=>undef,dependency=>undef,cores=>$opts{t},prefix=>$opts{p}, preset=>$opts{x}, gs=>$opts{g}, uin=>$opts{i},opts=>\%opts};
+  my $self = {contigs=>undef,dependency=>undef,cores=>$opts{t},prefix=>$opts{p}, preset=>$opts{x}, gs=>$opts{g}, uin=>$opts{i},uinccs=>$opts{I},opts=>\%opts};
   #we ask if the contigs are passed
   if(defined $opts{c}){
     $self->{contigs}=$opts{c};
@@ -56,6 +56,66 @@ sub main_target{
 #generic function is called from the WenganM pipeline
 sub create_jobs{
   my ($self,$reads)=@_;
+  #we create the default jobs for 1 run of Fasmin-sg
+  if($self->{preset} eq "ccspac"){
+    $self->{preset}="pacraw";
+    _def_create_jobs($self,$reads);
+    $self->{preset}="ccspac";
+    _ccs_create_jobs($self,$reads);
+  }elsif($self->{preset} eq "ccsont"){
+    $self->{preset}="ontraw";
+    _def_create_jobs($self,$reads);
+    $self->{preset}="ccsont";
+    _ccs_create_jobs($self,$reads);
+  }else{
+    _def_create_jobs($self,$reads);
+  }
+}
+
+#create default jobs for tools
+sub _ccs_create_jobs{
+  my ($self,$reads)=@_;
+
+  #Ouput files from FastMin-SG
+  #Modified FM for long-read
+  ### sprintf(filename, "%s.I%d.fm.sam", prefix,inserts[i]);
+  ## FM modified for short-Reads
+  #sprintf(filename, "%s.fm.sam",prefix); #prefix should be unique
+ my $job=();
+  #push(@{$self->{main_target}},$self->{contigs});
+
+  push(@{$job->{deps}},@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
+  my $c=1;
+  #push(@{$self->{main_target}},"longreads.".$self->{prefix}.".ccs2.fa"); #long read default file, we expect a single file
+  #push(@{$job->{target}},"longreads.".$self->{prefix}.".ccs2.fa");
+  #push(@{$job->{cmds}},join(" ","\@echo",$self->{prefix}.".ccs.ec.fa"," > ",$self->{prefix}.".fmccs.txt"));
+  push(@{$job->{cmds}},join(" ","\@echo",$self->{prefix}.".ccs2",$self->{prefix}.".ccs.ec.fa"," > ",$self->{prefix}.".fmlccs.txt"));
+  foreach my $i(@{$self->_get_inserts_sizes($self->{uinccs})}){
+            push(@{$job->{target}},$self->{prefix}.".ccs2.I$i.fm.sam");
+            push(@{$self->{main_target}},$self->{prefix}.".ccs2.I$i.fm.sam");
+  }
+
+
+  #FastMin-SG <preset> [options] <reference> <query>
+  my $param=$self->_def_parameters(undef);
+  my @mopt=($param,
+  "-t ",$self->{cores},
+  "-p",$self->{prefix},
+  "-I ",join(",",@{$self->_get_inserts_sizes($self->{uinccs})}),
+  $self->{contigs},
+  $self->{prefix}.".fmlccs.txt",
+  "2>".$self->{prefix}.".fmlccs.err",
+  ">".$self->{prefix}.".fmlccs.log");
+  push(@{$job->{cmds}},join(" ",FM_BIN,@mopt));
+  push(@{$self->{jobs}},$job);
+}
+
+
+
+
+#create default jobs for tools
+sub _def_create_jobs{
+  my ($self,$reads)=@_;
 
   #Ouput files from FastMin-SG
   #Modified FM for long-read
@@ -70,6 +130,7 @@ sub create_jobs{
   push(@{$self->{main_target}},"longreads.".$self->{prefix}.$c.".fa"); #long read default file, we expect a single file
   push(@{$job->{target}},"longreads.".$self->{prefix}.$c.".fa");
   foreach my $r (@{$reads->{lreads}}){
+    next if($r->{type} eq "ccs");
           if($c == 1){
             push(@{$job->{cmds}},join(" ","\@echo",$self->{prefix}.$c,$r->{long}," > ",$self->{prefix}.".fml.txt"));
           }else{
@@ -110,6 +171,9 @@ sub _get_inserts_sizes{
     $s="500,1000,2000,3000,4000,5000,6000,7000,8000,10000,15000,20000";
   }elsif($self->{preset} eq "ontraw"){
     $s="500,1000,2000,3000,4000,5000,6000,7000,8000,10000,15000,20000,30000,40000,50000";
+  }elsif($self->{preset} eq "ccsont" or $self->{preset} eq "ccspac"){
+    $s="500,1000,2000,3000,4000,5000,6000,7000,8000,10000";#def for 10kb lib
+    #$s="500,1000,2000,3000,4000,5000,6000,7000,8000,10000,12000,15000,18000";#def for 20kb lib
   }
 
   #user given list of insert-sizes
@@ -139,7 +203,7 @@ sub _def_parameters{
       #we define the preset for mapping the long-reads to the set of contigs
       my  $param = "ontlon -k $k -w $w -q $q -m $m -r 300";
       #FastMin-SG presets
-      if($self->{preset} eq "pacccs"){
+      if($self->{preset} eq "pacccs" or $self->{preset} eq "ccspac" or $self->{preset} eq "ccsont"){
             #preset for pacccs
             $k=21;
             $w=10;
@@ -150,6 +214,11 @@ sub _def_parameters{
             $w = (defined $self->{opts}->{w}) ? $self->{opts}->{w}:$w;
 
            $param = "pacccs -k $k -w $w -q $q -m $m -r 500";
+           if($self->{preset} eq "ccspac" or $self->{preset} eq "ccsont"){
+              #we start counting from 100M reads for the HiFi Mapping
+             $param = "pacccs -k $k -w $w -q $q -m $m -r 500 -n 100000000"
+           }
+
       }elsif($self->{preset} eq "ontlon"){
          #$param = "ontlon -k $k -w 5 -q 40 -r 300";
          $w=5;

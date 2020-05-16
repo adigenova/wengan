@@ -58,10 +58,20 @@ sub create_jobs{
   foreach my $d (@{$self->{dependency}}){
       #we skypt the contigs sequences
       next if($d eq $self->{contigs});
+      my $t=0;#short
+      $t=1 if($d=~m/.im./);
       if($c == 1){
-            push(@{$job->{cmds}},join(" ","\@echo",$d," > ",$self->{prefix}.".fms.sams.txt"));
+            if($self->{pipeline} eq "D" or $self->{pipeline} eq "A"){
+                  push(@{$job->{cmds}},join(" ","\@echo \"$d\t$t\""," > ",$self->{prefix}.".fms.sams.txt"));
+            }else{
+                  push(@{$job->{cmds}},join(" ","\@echo",$d," > ",$self->{prefix}.".fms.sams.txt"));
+            }
       }else{
+        if($self->{pipeline} eq "D" or $self->{pipeline} eq "A"){
+              push(@{$job->{cmds}},join(" ","\@echo \"$d\t$t\""," >> ",$self->{prefix}.".fms.sams.txt"));
+        }else{
             push(@{$job->{cmds}},join(" ","\@echo",$d," >> ",$self->{prefix}.".fms.sams.txt"));
+        }
       }
       $c++;
   }
@@ -128,19 +138,27 @@ sub _def_parameters{
       #Discovar contigs are more accurate than Minia3 and Abyss2.
       if($self->{pipeline} eq "D"){
           $d = 1;
-          $param = "-d $d";
+          $param = "-d $d --clib 1 ";
           $self->_set_depth($d);
       }
 
+      if($self->{pipeline} eq "A"){
+          $param = "-d $d --clib 1 ";
+          $self->_set_depth($d);
+      }
       #we ask if the -d option was specified
       if(defined $self->{opts}->{d}){
          $d = $self->{opts}->{d};
-        $param = "-d $d";
+        $param = "-d $d --clib 1";#affect only A and D
         $self->_set_depth($d);
       }
       #means WenganM pipeline, we have to provide the coverage minia3 file
       if($self->{pipeline} eq "M"){
-          $param.=" --fst 0.1 -b ".$self->{prefix}.".minia.121.contigs.cov.txt";
+          my $fst=0.1;
+          if (defined $self->{opts}->{f}){
+            $fst=$self->{opts}->{f};
+          }
+          $param.=" --fst $fst -b ".$self->{prefix}.".minia.contigs.cov.txt";
       }
       return $param;
 }

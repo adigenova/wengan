@@ -77,10 +77,16 @@ sub create_jobs{
             if($insert < $self->{maxgis}){
                 push(@{$job->{cmds}},join(" ","\@echo",$s," >> ",$self->{prefix}.".sams.txt"));
               }else{
-                push(@{$job->{cmds}},join(" ","\@echo \"$s	$insert\""," >> ",$self->{prefix}.".sams.txt"));
+                push(@{$job->{cmds}},join(" ","\@echo \"$s\t$insert\""," >> ",$self->{prefix}.".sams.txt"));
             }
           }
     $c++;
+  }
+  #we merge  both reads sets HiFi and raw long reads
+  if($self->{preset} eq "ccsont" or $self->{preset} eq "ccspac"){
+    my $merge_reads="longreads.".$self->{prefix}.".".$self->{preset}.".fa";
+    push(@{$job->{cmds}},join(" ","cat ",$self->{lreads},"longreads.".$self->{prefix}.".ccs2.fa",">", $merge_reads));
+    $self->{lreads}=$merge_reads;
   }
 
   my @mopt=($param,
@@ -101,51 +107,99 @@ sub create_jobs{
 sub _def_parameters{
       my $self=shift;
       my  $param = "";
-      #FastMin-SG presets
+      #Liger available options
+      #-M Minimum contig length in TR [def:2000]
+      #-R Repeat copy number factor [def:1.5]
+      #-L Length of long mate-edges [def:100000]
+      #-N Number of long-read needed to keep a potencial erroneus mate-edge [def:5]
+      #-P Minimum length of reduced paths to convert them to physical fragments [def:20kb]
+      #-Q Minimum contig length in matching [def:2000]
+      #-U Repeat copy number factor backbone [def:1.5]
+
       if($self->{preset} eq "pacccs"){
-           $param = (defined $self->{opts}->{M}) ? " --mcs ".$self->{opts}->{M}:" --mcs 1000";
-           $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
+           $param = (defined $self->{opts}->{M}) ?  " --mcs ".$self->{opts}->{M}:" --mcs 1000 ";
+           $param .= (defined $self->{opts}->{Q}) ? " --mcr ".$self->{opts}->{Q}:"";
+           $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000 ";
            $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
            $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
            $param .= (defined $self->{opts}->{R}) ? " --rcn ".$self->{opts}->{R}:"";
+           $param .= (defined $self->{opts}->{U}) ? " --rct ".$self->{opts}->{U}:"";
+           $param .= (defined $self->{opts}->{T}) ? " --mit ".$self->{opts}->{T}:"";
            $self->{maxgis}=10000;#set the insert size that are not inferred 10% of the synthetic
+
       }elsif($self->{preset} eq "ontlon"){
          #$param = "--mlp 20000";
-         $param = (defined $self->{opts}->{M}) ? " --mcs ".$self->{opts}->{M}:"";
-         $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 20000";
+         $param = (defined $self->{opts}->{M}) ?  " --mcs ".$self->{opts}->{M}:"";
+         $param .= (defined $self->{opts}->{Q}) ? " --mcr ".$self->{opts}->{Q}:"";
+         $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 20000 ";
          $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
          $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
          $param .= (defined $self->{opts}->{R}) ? " --rcn ".$self->{opts}->{R}:"";
+         $param .= (defined $self->{opts}->{U}) ? " --rct ".$self->{opts}->{U}:"";
+         $param .= (defined $self->{opts}->{T}) ? " --mit ".$self->{opts}->{T}:"";
          $self->{maxgis}=16000;
       }elsif($self->{preset} eq "pacraw"){
             #$param = "--mlp 10000";
-            $param = (defined $self->{opts}->{M}) ? " --mcs ".$self->{opts}->{M}:"";
-            $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
+            $param = (defined $self->{opts}->{M}) ?  " --mcs ".$self->{opts}->{M}:"";
+            $param .= (defined $self->{opts}->{Q}) ? " --mcr ".$self->{opts}->{Q}:"";
+            $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000 ";
             $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
             $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
             $param .= (defined $self->{opts}->{R}) ? " --rcn ".$self->{opts}->{R}:"";
+            $param .= (defined $self->{opts}->{U}) ? " --rct ".$self->{opts}->{U}:"";
+            $param .= (defined $self->{opts}->{T}) ? " --mit ".$self->{opts}->{T}:"";
+
             $self->{maxgis}=8000;
 
       }elsif($self->{preset} eq "ontraw"){
         #$param = "--mlp 10000";
-        $param = (defined $self->{opts}->{M}) ? " --mcs ".$self->{opts}->{M}:"";
-        $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
+        $param = (defined $self->{opts}->{M}) ?  " --mcs ".$self->{opts}->{M}:"";
+        $param .= (defined $self->{opts}->{Q}) ? " --mcr ".$self->{opts}->{Q}:"";
+        $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000 ";
         $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
         $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
         $param .= (defined $self->{opts}->{R}) ? " --rcn ".$self->{opts}->{R}:"";
+        $param .= (defined $self->{opts}->{U}) ? " --rct ".$self->{opts}->{U}:"";
+        $param .= (defined $self->{opts}->{T}) ? " --mit ".$self->{opts}->{T}:"";
         $self->{maxgis}=16000;
 
       }elsif($self->{preset} eq "pacraw" and $self->{pipeline} eq "M"){
             #$param = "--mlp 10000 --mcs 1000";
-            $param = (defined $self->{opts}->{M}) ? " --mcs ".$self->{opts}->{M}:" --mcs 1000";
-            $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000";
+            $param = (defined $self->{opts}->{M}) ?  " --mcs ".$self->{opts}->{M}:" --mcs 1000 ";
+            $param .= (defined $self->{opts}->{Q}) ? " --mcr ".$self->{opts}->{Q}:"";
+            $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 10000 ";
             $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
             $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
             $param .= (defined $self->{opts}->{R}) ? " --rcn ".$self->{opts}->{R}:"";
+            $param .= (defined $self->{opts}->{U}) ? " --rct ".$self->{opts}->{U}:"";
+            $param .= (defined $self->{opts}->{T}) ? " --mit ".$self->{opts}->{T}:"";
             $self->{maxgis}=7000;
+      }elsif($self->{preset} eq "ccsont" or $self->{preset} eq "ccspac"){
+          $param = (defined $self->{opts}->{M}) ?  " --mcs ".$self->{opts}->{M}:" --mcs 10000 ";
+          $param .= (defined $self->{opts}->{Q}) ? " --mcr ".$self->{opts}->{Q}:" --mcr 7000  ";
+          $param .= (defined $self->{opts}->{P}) ? " --mlp ".$self->{opts}->{P}:" --mlp 20000 ";
+          $param .= (defined $self->{opts}->{N}) ? " --nlm ".$self->{opts}->{N}:"";
+          $param .= (defined $self->{opts}->{L}) ? " --lme ".$self->{opts}->{L}:"";
+          $param .= (defined $self->{opts}->{R}) ? " --rcn ".$self->{opts}->{R}:"";
+          $param .= (defined $self->{opts}->{U}) ? " --rct ".$self->{opts}->{U}:" --rct 2.0 ";
+          $param .= (defined $self->{opts}->{T}) ? " --mit ".$self->{opts}->{T}:"";
+          $self->{maxgis}=10000;#for paccss
       }
 
-      return $param;
+      if($self->{pipeline} eq "D"){
+        $param.=" --mit 20000000 "; #def are 1M, 20M for D
+      }
+
+      #options for WenganA and WenganM with UL
+      if($self->{pipeline} eq "M" and $self->{preset} eq "ontlon"){
+          $param.=" --mit 10000 ";
+      }
+
+      if($self->{pipeline} eq "A" and $self->{preset} eq "ontlon"){
+          $param.=" --mit 10000 ";
+      }
+
+     return $param;
 }
 
 1;

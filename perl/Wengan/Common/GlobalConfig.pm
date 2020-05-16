@@ -72,6 +72,6 @@ our @EXPORT_OK=qw(
       IM_BIN
       LIGER_BIN
       AUXPERL_DIR
-      SEQTK_BIN
+      SEQTK_BIN	
 );
 1;

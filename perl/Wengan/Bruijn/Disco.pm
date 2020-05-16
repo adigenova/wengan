@@ -45,7 +45,7 @@ sub create_jobs{
   }else{
     #default method for create jobs
     $self->_create_jobs_short($reads);
-    push(@{$self->{main_target}},@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
+    #push(@{$self->{main_target}},@{$self->{jobs}}[$#{$self->{jobs}}]->{target}[0]);
   }
 
 }
