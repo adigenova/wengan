@@ -41,9 +41,6 @@ Table of Contents
     # Assembling ultra-long nanopore reads and BGI reads with WenganM
      wengan.pl -x ontlon -a M -s lib2.fwd.fastq.gz,lib2.rev.fastq.gz -l ont.fastq.gz -p asm3 -t 20 -g 3000
 
-    # Non-hybrid assembly of PacBio Circular Consensus Sequence data with WenganM
-     wengan.pl -x pacccs -a M -l ccs.fastq.gz -p asm4 -t 20 -g 3000
-
     # Assembling ultra-long nanopore reads and Illumina reads with WenganD (need a high memory machine 600Gb)
      wengan.pl -x ontlon -a D -s lib2.fwd.fastq.gz,lib2.rev.fastq.gz -l ont.fastq.gz -p asm5 -t 20 -g 3000
 
@@ -104,7 +101,7 @@ preset for raw long-reads from Pacific Bioscience (PacBio) typically with an  N5
 preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) typically with an N50 ~\[15kb\]. This type of data is not fully supported yet.
 
 # Wengan demo
-The repository [wengan_demo](https://github.com/adigenova/wengan_demo) contains a small dataset and instructions to test [Wengan v0.1](https://github.com/adigenova/wengan/releases/tag/0.1).
+The repository [wengan_demo](https://github.com/adigenova/wengan_demo) contains a small dataset and instructions to test [Wengan v0.2](https://github.com/adigenova/wengan/releases/tag/0.2).
 
 ```
 #fetch the demo dataset
@@ -177,14 +174,14 @@ After compilation you have to copy the binaries to wengan-dir/bin.
 c++ compiler; compilation was tested with gcc version GCC/7.3.0-2.30 (Linux) and clang-1000.11.45.5 (Mac OSX).
 cmake 3.2+.
 
-#### Specific component source code versions used to build Wengan v0.1
+#### Specific component source code versions used to build Wengan v0.2
 
 1. abyss commit [d4b4b5d](https://github.com/bcgsc/abyss/tree/d4b4b5d3091d90a4967180d987bd7168dbf04585)
 2. discovarexp-51885 commit  [f827bab](https://github.com/adigenova/discovarexp-51885/tree/f827bab9bd0e328fee3dd57b7fefebfeebd92be4)
 3. minia commit [017d23e](https://github.com/GATB/minia/tree/017d23e60d56db183c499bb2241345e95514ebbe)
-4. fastmin-sg commit [710aea0](https://github.com/adigenova/fastmin-sg/tree/710aea0b970fa6c7482499e5479927fabbad34fe)
-5. intervalmiss commit [bb884c4](https://github.com/adigenova/intervalmiss/tree/bb884c4bf408880fd3acb6621e148e57ad6f695d)
-6. liger commit [82658bc](https://github.com/adigenova/liger/tree/82658bcc2adde729d05b90faf17d0a22c500189c)
+4. fastmin-sg commit [861b061](https://github.com/adigenova/fastmin-sg/tree/861b061ecf53cb1aff1c485bac9aca17c399bb7f)
+5. intervalmiss commit [11be8b42](https://github.com/adigenova/intervalmiss/tree/11be8b428ef31ae7ad0b94d20c216f4a3d608685)
+6. liger commit [63a044b0](https://github.com/adigenova/liger/tree/63a044b04c910d41f28c6196d7d027d9cee3353a)
 7. seqtk commit [2efd0c8](https://github.com/adigenova/seqtk/tree/2efd0c85767b2e8ae2366d7ea7edb8041adb0eb1)
 
 
