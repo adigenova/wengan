@@ -1,10 +1,9 @@
 [![HitCount](http://hits.dwyl.io/adigenova/wengan.svg)](http://hits.dwyl.io/adigenova/wengan)
-[![GitHub Downloads](https://img.shields.io/github/downloads/adigenova/wengan/total.svg?style=social&logo=github&label=Download)](https://github.com/adigenova/wengan/releases)
 
 
 # Wengan
 An accurate and ultra-fast genome assembler
-
+### Version: 0.2 (18/05/2020)
 
 Table of Contents
 =================
