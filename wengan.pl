@@ -13,19 +13,19 @@ B<Wengan> - An accurate and ultrafast genome assembler
 
 =head1 SYNOPSIS
 
-  # Assembling Oxford nanopore and illumina reads with WenganM
+  # Assembling Oxford Nanopore and Illumina reads with WenganM
    wengan.pl -x ontraw -a M -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l ont.fastq.gz -p asm1 -t 20 -g 3000
 
-  # Assembling PacBio reads and illumina reads with WenganA
+  # Assembling PacBio reads and Illumina reads with WenganA
    wengan.pl -x pacraw -a A -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l pac.fastq.gz -p asm2 -t 20 -g 3000
 
-  # Assembling ultra-long nanopore reads and BGI reads with WenganM
+  # Assembling ultra-long Nanopore reads and BGI reads with WenganM
    wengan.pl -x ontlon -a M -s lib2.fwd.fastq.gz,lib2.rev.fastq.gz -l ont.fastq.gz -p asm3 -t 20 -g 3000
 
   # Hybrid long-read only assembly of PacBio Circular Consensus Sequence and Nanopore data with WenganM
    wengan.pl -x ccsont -a M -l ont.fastq.gz -b ccs.fastq.gz -p asm4 -t 20 -g 3000
 
-  # Assembling ultra-long nanopore reads and Illumina reads with WenganD (requires a high memory machine 600Gb)
+  # Assembling ultra-long Nanopore reads and Illumina reads with WenganD (requires a high memory machine 600Gb)
    wengan.pl -x ontlon -a D -s lib2.fwd.fastq.gz,lib2.rev.fastq.gz -l ont.fastq.gz -p asm5 -t 20 -g 3000
 
   # Assembling pacraw reads with pre-assembled short-read contigs from Minia3
@@ -40,9 +40,9 @@ B<Wengan> - An accurate and ultrafast genome assembler
 =head1 DESCRIPTION
 
 
-B<Wengan> is a new genome assembler that unlike most of the current long-reads assemblers avoid entirely the all-vs-all read comparison.
-The key idea behind B<Wengan> is that long-read alignments can be B<inferred by building paths> on a sequence graph. To achieve this, B<Wengan> build a new sequence graph called the Synthetic Scaffolding Graph. The SSG is build from a spectrum of synthetic mate-pair libraries extracted from raw long-reads. Then, longer alignments are build by peforming a transitive reduction of the edges.
-Another distinct feature of B<Wengan> is that is the only assembler that perform B<self-validation> by following the read information. B<Wengan> identify miss-assemblies at differents steps of the assembly process. For more information about the algorithmic ideas behind B<Wengan> please read the preprint available on bioRxiv.
+B<Wengan> is a new genome assembler that, unlike most of the current long-reads assemblers, avoids entirely the all-vs-all read comparison.
+The key idea behind B<Wengan> is that long-read alignments can be B<inferred by building paths> on a sequence graph. To achieve this, B<Wengan> builds a new sequence graph called the Synthetic Scaffolding Graph (SSG). The SSG is built from a spectrum of synthetic mate-pair libraries extracted from raw long-reads. Then, longer alignments are built by performing a transitive reduction of the edges.
+Another distinct feature of B<Wengan> is that it is the only assembler that performs B<self-validation> by following the read information. B<Wengan> identifies miss-assemblies at different steps of the assembly process. For more information about the algorithmic ideas behind B<Wengan>, please read the preprint available on bioRxiv.
 
 
 =head2 ABOUT THE NAME
@@ -56,25 +56,24 @@ Email digenova@gmail.com
 
 =head1 SHORT-READ ASSEMBLY
 
-B<Wengan> uses a de bruijn graph assembler to build the assembly backbone from short-read data.
-Currently, B<Wengan> can use B<Minia3>, B<Abyss2> or B<DiscoVarDenovo>.  The recomended short-read coverage
-is B<50-60X> of 2 x 150bp  or 2 x 250bp short reads.
+B<Wengan> uses a de Brujin graph assembler to build the assembly backbone from short-read data.
+Currently, B<Wengan> can use B<Minia3>, B<Abyss2> or B<DiscoVarDenovo>.  The recommended short-read coverage
+is B<50-60X> of 2 x 150bp or 2 x 250bp short reads.
 
 =head2 WenganM [M]
 
-This B<Wengan> mode use the B<Minia3> short-read assembler, this is the fastest mode of B<Wengan> and can assemble a complete human genome
-in less than 210 CPU hours (~50Gb of RAM).
+This B<Wengan> mode use the B<Minia3> short-read assembler. This is the fastest mode of B<Wengan> and can assemble a complete human genome
+in less than 210 CPU hours (~50GB of RAM).
 
 =head2 WenganA [A]
 
-This B<Wengan> mode use the B<Abyss2> short-read assembler, this is the lowest memory mode of B<Wengan> and can assemble a complete human genome
-in less than 40Gb of RAM (~900 CPU hours). This assembly mode takes  ~2 days when using 20 CPUs on a single machine.
+This B<Wengan> mode use the B<Abyss2> short-read assembler. This is the lowest memory mode of B<Wengan> and can assemble a complete human genome
+with less than 40GB of RAM (~900 CPU hours). This assembly mode takes ~2 days when using 20 CPUs on a single machine.
 
 
 =head2 WenganD [D]
 
-This B<Wengan> mode use the B<DiscovarDenovo> short-read assembler, this is the greedier memory mode of B<Wengan> and for assembling a complete human genome need about 600Gb of RAM (~900 CPU hours).
-This assembly mode takes ~2 days when using 20 CPUs on a single machine.
+This B<Wengan> mode use the B<DiscovarDenovo> short-read assembler. This is the greedier memory mode of B<Wengan> and, for assembling a complete human genome, needs about 600GB of RAM (~900 CPU hours). This assembly mode takes ~2 days when using 20 CPUs on a single machine.
 
 =cut
 
@@ -95,8 +94,8 @@ use Wengan::Scheduler::Local; # the scheduler is make and control the execution 
 
 sub usage {
    die(qq/
-  Usage example :
-    # Assembling Oxford nanopore and illumina reads with WenganM
+  Usage example:
+    # Assembling Oxford Nanopore and Illumina reads with WenganM
     wengan.pl -x ontraw -a M -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l ont.fastq.gz -p asm1 -t 20 -g 3000
 
   Wengan options:
@@ -110,7 +109,7 @@ sub usage {
       -g 3000 [genome size in Mb]
       -p prefix
 
-   General Options :
+   General Options:
       -h [detail information]
       -t cores [1]
       -c <pre-assembled short-read contigs>
@@ -131,7 +130,7 @@ sub usage {
         -M Minimum contig length in TR [def:2000]
         -R Repeat copy number factor [def:1.5]
         -L Length of long mate-edges [def:100000]
-        -N Number of long-read needed to keep a potencial erroneus mate-edge [def:5]
+        -N Number of long-reads needed to keep a potentially erroneous mate-edge [def:5]
         -P Minimum length of reduced paths to convert them to physical fragments [def:20kb]
         -Q Minimum contig length in matching [def:2000]
         -U Repeat copy number factor backbone [def:1.5]
@@ -242,14 +241,14 @@ $pipeline->run();
 
 =head1 LONG-READ PRESETS
 
-The presets define several variables of the wengan pipeline execution and depends on the long-read technology used to sequence the genome.
+The presets define several variables of the Wengan pipeline execution and depends on the long-read technology used to sequence the genome.
 The recommended long-read coverage is 30X.
 
 =cut
 
 =head2	ontlon
 
-preset for raw ultra-long-reads from Oxford Nanopore, tipically having an  N50 > 50kb.
+preset for raw ultra-long-reads from Oxford Nanopore, typically having an N50 > 50kb.
 
 =cut
 
@@ -261,7 +260,7 @@ sub wengan_ontlon{
 
 =head2	ontraw
 
-preset for raw long-reads Nanopore reads tipically having an  N50 ~[15kb-40kb].
+preset for raw long-reads Nanopore reads typically having an N50 ~[15kb-40kb].
 
 =cut
 
@@ -276,7 +275,7 @@ sub wengan_ontraw{
 
 =head2	pacraw
 
-preset for raw long-reads from Pacific Bioscience (PacBio) tipically having an  N50 ~[8kb-60kb].
+preset for raw long-reads from Pacific Bioscience (PacBio) typically having an N50 ~[8kb-60kb].
 
 =cut
 
@@ -291,7 +290,7 @@ sub wengan_pacraw{
 
 =head2	ccsont/ccspac
 
-preset for Hybrid assembly of Circular Consensus Sequences from Pacific Bioscience (PacBio) tipically having an  N50 ~[15kb].
+preset for Hybrid assembly of Circular Consensus Sequences from Pacific Bioscience (PacBio) typically having an N50 ~[15kb].
 The current version has been tested only in haploid human genomes.
 
 =cut
@@ -310,7 +309,7 @@ sub wengan_ccslong{
 
 =head2	pacccs
 
-preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) tipically having an  N50 ~[15kb].
+preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) typically having an N50 ~[15kb].
 
 =cut
 
@@ -335,13 +334,13 @@ An alignment-free algorithm for ultrafast scaffolding graph construction from sh
 
    Indexing:
     -k INT       k-mer size (no larger than 28) [15]
-    -w INT       minizer window size [10]
+    -w INT       minimizer window size [10]
 
   Mapping synthetic read-pairs:
 
-    -i list      Insert sizes for synthetic libraries [i.e 500,1000,2000,3000,4000,5000, .. ,20000]
+    -i list      Insert sizes for synthetic libraries [i.e. 500,1000,2000,3000,4000,5000, ... ,20000]
     -q INT       Minimum quality score (no larger than 60) [40]
-    -m INT       Moving windown [150]
+    -m INT       Moving window [150]
 
 =head2 IntervalMiss
 
@@ -354,9 +353,9 @@ IntervalMiss detect miss-assembled contigs and correct them when necessary.
 
 =head2  Liger
 
-Liger use the Synthetic Scaffoding Graph to compute overlap among long reads,
-order and orient short contigs, validate scaffols sequences, fill the gaps and
-polishing of the assembly.
+Liger uses the Synthetic Scaffoding Graph to compute overlap among long reads,
+order and orient short contigs, validate scaffolds sequences, fill the gaps, and
+polish the assembly.
 
 =head3 Liger options
 
@@ -371,7 +370,7 @@ Long-reads overlap options:
 
 Validation of lines options:
 
-      -N INT     Number of long-read needed to keep a potencial erroneus mate-edge [--nlm] (default=`5', min=`1')
+      -N INT     Number of long-reads needed to keep a potentially erroneous mate-edge [--nlm] (default=`5', min=`1')
       -P INT     Minimum length of reduced paths to convert them to physical fragments [--mlp] (default=`20000', min=`5000')
 
 =cut
