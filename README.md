@@ -103,7 +103,7 @@ preset for raw long-reads from Pacific Bioscience (PacBio) typically with an N50
 preset for Circular Consensus Sequences from Pacific Bioscience (PacBio) typically with an N50 ~\[15kb\]. This type of data is not fully supported yet.
 
 # Wengan demo
-The repository [wengan_demo](https://github.com/adigenova/wengan_demo) contains a small dataset and instructions to test [Wengan v0.2](https://github.com/adigenova/wengan/releases/tag/0.2).
+The repository [wengan_demo](https://github.com/adigenova/wengan_demo) contains a small dataset and instructions to test [Wengan v0.2](https://github.com/adigenova/wengan/releases/tag/v0.2).
 
 ```
 #fetch the demo dataset
