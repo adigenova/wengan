@@ -32,16 +32,19 @@ Table of Contents
 
 # SYNOPSIS
 
-    # Assembling Oxford nanopore and illumina reads with WenganM
+    # Assembling Oxford Nanopore and Illumina reads with WenganM
      wengan.pl -x ontraw -a M -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l ont.fastq.gz -p asm1 -t 20 -g 3000
 
-    # Assembling PacBio reads and illumina reads with WenganA
+    # Assembling PacBio reads and Illumina reads with WenganA
      wengan.pl -x pacraw -a A -s lib1.fwd.fastq.gz,lib1.rev.fastq.gz -l pac.fastq.gz -p asm2 -t 20 -g 3000
 
-    # Assembling ultra-long nanopore reads and BGI reads with WenganM
+    # Assembling ultra-long Nanopore reads and BGI reads with WenganM
      wengan.pl -x ontlon -a M -s lib2.fwd.fastq.gz,lib2.rev.fastq.gz -l ont.fastq.gz -p asm3 -t 20 -g 3000
 
-    # Assembling ultra-long nanopore reads and Illumina reads with WenganD (need a high memory machine 600Gb)
+    # Hybrid long-read only assembly of PacBio Circular Consensus Sequence and Nanopore data with WenganM
+     wengan.pl -x ccsont -a M -l ont.fastq.gz -b ccs.fastq.gz -p asm4 -t 20 -g 3000
+ 
+    # Assembling ultra-long Nanopore reads and Illumina reads with WenganD (need a high memory machine 600GB)
      wengan.pl -x ontlon -a D -s lib2.fwd.fastq.gz,lib2.rev.fastq.gz -l ont.fastq.gz -p asm5 -t 20 -g 3000
 
     # Assembling pacraw reads with pre-assembled short-read contigs from Minia3
@@ -55,38 +58,37 @@ Table of Contents
 
 # Description
 
-**Wengan** is a new genome assembler that unlike most of the current long-reads assemblers avoids entirely the all-vs-all read comparison.
-The key idea behind **Wengan** is that long-read alignments can be **inferred by building paths** on a sequence graph. To achieve this, **Wengan** builds a new sequence graph called the Synthetic Scaffolding Graph. The SSG is built from a spectrum of synthetic mate-pair libraries extracted from raw long-reads. Longer alignments are then built by peforming a transitive reduction of the edges.
-Another distinct feature of **Wengan** is that it performs **self-validation** by following the read information. **Wengan** identifies miss-assemblies at differents steps of the assembly process. For more information about the algorithmic ideas behind **Wengan** please read the preprint available in bioRxiv.
+**Wengan** is a new genome assembler that, unlike most of the current long-reads assemblers, avoids entirely the all-vs-all read comparison.
+The key idea behind **Wengan** is that long-read alignments can be **inferred by building paths** on a sequence graph. To achieve this, **Wengan** builds a new sequence graph called the Synthetic Scaffolding Graph (SSG). The SSG is built from a spectrum of synthetic mate-pair libraries extracted from raw long-reads. Longer alignments are then built by performing a transitive reduction of the edges.
+Another distinct feature of **Wengan** is that it performs **self-validation** by following the read information. **Wengan** identifies miss-assemblies at different steps of the assembly process. For more information about the algorithmic ideas behind **Wengan**, please read the preprint available in bioRxiv.
+
 
 # Short-read assembly
 
 **Wengan** uses a de Bruijn graph assembler to build the assembly backbone from short-read data.
 Currently, **Wengan** can use **Minia3**, **Abyss2** or **DiscoVarDenovo**.  The recommended short-read coverage
-is **50-60X** of 2 x 150bp or 2 x 250bp  reads.
+is **50-60X** of 2 x 150bp or 2 x 250bp reads.
 
 ## WenganM \[M\]
 
-This **Wengan** mode uses the **Minia3** short-read assembler. This is the fastest mode of **Wengan** and can assemble a complete human genome in less than 210 CPU hours (~50Gb of RAM).
+This **Wengan** mode uses the **Minia3** short-read assembler. This is the fastest mode of **Wengan** and can assemble a complete human genome in less than 210 CPU hours (~50GB of RAM).
 
 ## WenganA \[A\]
 
-This **Wengan** mode uses the **Abyss2** short-read assembler, this is the lowest memory mode of **Wengan** and can assemble a complete human genome
-in less than 40Gb of RAM (~900 CPU hours). This assembly mode takes  ~2 days when using 20 CPUs on a single machine.
+This **Wengan** mode uses the **Abyss2** short-read assembler. This is the lowest memory mode of **Wengan** and can assemble a complete human genome with less than 40GB of RAM (~900 CPU hours). This assembly mode takes ~2 days when using 20 CPUs on a single machine.
 
 ## WenganD \[D\]
 
-This **Wengan** mode uses the **DiscovarDenovo** short-read assembler, this is the greedier memory mode of **Wengan** and for assembling a complete human genome needs about 600Gb of RAM (~900 CPU hours).
-This assembly mode takes ~2 days when using 20 CPUs on a single machine.
+This **Wengan** mode uses the **DiscovarDenovo** short-read assembler. This is the greedier memory mode of **Wengan** and for assembling a complete human genome needs about 600GB of RAM (~900 CPU hours). This assembly mode takes ~2 days when using 20 CPUs on a single machine.
 
 # Long-read presets
 
-The presets define several variables of the wengan pipeline execution and depend on the long-read technology used to sequence the genome.
+The presets define several variables of the Wengan pipeline execution and depend on the long-read technology used to sequence the genome.
 The recommended long-read coverage is 30X.
 
 ## ontlon
 
-preset for raw ultra-long-reads from Oxford Nanopore, typically with an  N50 > 50kb.
+preset for raw ultra-long-reads from Oxford Nanopore, typically with an N50 > 50kb.
 
 ## ontraw
 
@@ -94,7 +96,7 @@ preset for raw Nanopore reads typically with an N50 ~\[15kb-40kb\].
 
 ## pacraw
 
-preset for raw long-reads from Pacific Bioscience (PacBio) typically with an  N50 ~\[8kb-60kb\].
+preset for raw long-reads from Pacific Bioscience (PacBio) typically with an N50 ~\[8kb-60kb\].
 
 ## pacccs (experimental)
 
@@ -110,7 +112,7 @@ git clone https://github.com/adigenova/wengan_demo.git
 
 # Wengan benchmark
 
-| Genome | Long reads| Short reads|Wengan Mode| NG50 (Mb) | CPU (h) | RAM (Gb) | Fasta file|
+| Genome | Long reads| Short reads|Wengan Mode| NG50 (Mb) | CPU (h) | RAM (GB) | Fasta file|
 |:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 |  |  | 2x150bp 50X (GIAB:[rs1][g1] , [rs2][g2])| WenganA      | 23.08   | 671     | 45  | [asm][NA12878.WenganA.ONT-ul-rel5.fa.gz]
 | NA12878| ONT 35X ([rel5][rel5]) | 2x150bp 50X (GIAB:[rs1][g1] , [rs2][g2])| WenganM     | 16.67   | 185     | 53  | [asm][NA12878.WenganM.ONT-ul-rel5.fa.gz]
