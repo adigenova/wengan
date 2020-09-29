@@ -114,12 +114,12 @@ git clone https://github.com/adigenova/wengan_demo.git
 
 | Genome | Long reads| Short reads|Wengan Mode| NG50 (Mb) | CPU (h) | RAM (GB) | Fasta file|
 |:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
-|  |  | 2x150bp 50X (GIAB:[rs1][g1] , [rs2][g2])| WenganA      | 23.08   | 671     | 45  | [asm][NA12878.WenganA.ONT-ul-rel5.fa.gz]
-| NA12878| ONT 35X ([rel5][rel5]) | 2x150bp 50X (GIAB:[rs1][g1] , [rs2][g2])| WenganM     | 16.67   | 185     | 53  | [asm][NA12878.WenganM.ONT-ul-rel5.fa.gz]
-|  |  |  2x250bp 60X (ENA:[rs1][wdsna1] , [rs2][wdsna2])| WenganD      | 33.13   |  550    | 622  | [asm][NA12878.WenganD.ONT-ul-rel5.fa.gz]
-| HG00073   | PAC 90X (ENA:[rl1][ena])| 2x250bp 63X (ENA:[rs1][wdhg1] , [rs2][wdhg2])| WenganD     | 29.2   | 800     | 644  | [asm][HG00733.WenganD.PAC-SequelI.fa.gz]
-| NA24385   | ONT 60X (GIAB:[rl1][giab]) | 2x250bp 70X (GIAB:[rs1][g3])| WenganD     | 48.8   | 910     | 650  | [asm][NA24385.WenganD.ONT-ul-final.fa.gz]
-| CHM13   | ONT 50X (T2T:[rel2][t2t])| 2x250bp 66X (ENA:[rs1][wdch1] , [rs2][wdch2])| WenganD     | 57.4   | 1027     | 647  | [asm][CHM13.WenganD.ONT-T2T-rel2.fa.gz]
+|  |  | 2x150bp 50X (GIAB:[rs1][g1] , [rs2][g2])| WenganA      | 25.99   | 725     | 45  | [asm][NA12878.WenganA.ONT-ul-rel5.fa.gz]
+| NA12878| ONT 35X ([rel5][rel5]) | 2x150bp 50X (GIAB:[rs1][g1] , [rs2][g2])| WenganM     | 17.23   | 203     | 53  | [asm][NA12878.WenganM.ONT-ul-rel5.fa.gz]
+|  |  |  2x250bp 60X (ENA:[rs1][wdsna1] , [rs2][wdsna2])| WenganD      | 35.31   |  589    | 622  | [asm][NA12878.WenganD.ONT-ul-rel5.fa.gz]
+| HG00073   | PAC 90X (ENA:[rl1][ena])| 2x250bp 63X (ENA:[rs1][wdhg1] , [rs2][wdhg2])| WenganD     | 32.35   | 936   | 644  | [asm][HG00733.WenganD.PAC-SequelI.fa.gz]
+| NA24385   | ONT 60X (GIAB:[rl1][giab]) | 2x250bp 70X (GIAB:[rs1][g3])| WenganD     | 50.59  | 963     | 651  | [asm][NA24385.WenganD.ONT-ul-final.fa.gz]
+| CHM13   | ONT 50X (T2T:[rel3][t2t])| 2x250bp 66X (ENA:[rs1][wdch1] , [rs2][wdch2])| WenganD     | 69.72   | 1198     | 646  | [asm][CHM13.WenganD.ILL_UL_R3.fa.gz]
 
 [rel5]: https://github.com/nanopore-wgs-consortium/NA12878/blob/master/nanopore-human-genome/rel5.md
 [t2t]: https://github.com/nanopore-wgs-consortium/CHM13
@@ -137,15 +137,15 @@ git clone https://github.com/adigenova/wengan_demo.git
 [g2]: https://cutt.ly/EekQWrz
 [g3]: https://cutt.ly/lekQWmZ
 
-[NA12878.WenganA.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/2598666/files/NA12878.WenganA.ONT-ul-rel5.fa.gz?download=1
-[NA12878.WenganM.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/2598666/files/NA12878.WenganM.ONT-ul-rel5.fa.gz?download=1
-[NA12878.WenganD.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/2598666/files/NA12878.WenganD.ONT-ul-rel5.fa.gz?download=1
-[CHM13.WenganD.ONT-T2T-rel2.fa.gz]: https://zenodo.org/record/2598666/files/CHM13.WenganD.ONT-T2T-rel2.fa.gz?download=1
-[NA24385.WenganD.ONT-ul-final.fa.gz]: https://zenodo.org/record/2598666/files/NA24385.WenganD.ONT-ul-final.fa.gz?download=1
-[HG00733.WenganD.PAC-SequelI.fa.gz]: https://zenodo.org/record/2598666/files/HG00733.WenganD.PAC-SequelI.fa.gz?download=1
+[NA12878.WenganA.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/3779515/files/NA12878.WenganA.ONT-ul-rel5.fa.gz?download=1
+[NA12878.WenganM.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/3779515/files/NA12878.WenganM.ONT-ul-rel5.fa.gz?download=1
+[NA12878.WenganD.ONT-ul-rel5.fa.gz]: https://zenodo.org/record/3779515/files/NA12878.WenganD.ONT-ul-rel5.fa.gz?download=1
+[CHM13.WenganD.ILL_UL_R3.fa.gz]: https://zenodo.org/record/3779515/files/CHM13.WenganD.ILL_UL_R3.fa.gz?download=1
+[NA24385.WenganD.ONT-ul-final.fa.gz]: https://zenodo.org/record/3779515/files/NA24385.WenganD.ONT-ul-final.fa.gz?download=1
+[HG00733.WenganD.PAC-SequelI.fa.gz]: https://zenodo.org/record/3779515/files/HG00733.WenganD.PAC-SequelI.fa.gz?download=1
 
-The assemblies generated using Wengan can be downloaded from [Zenodo](https://zenodo.org/record/2598666).
-All the assemblies were ran as described in the Wengan preprint. NG50 was computed using a genome size of 3.14Gb.
+The assemblies generated using Wengan (v0.2) can be downloaded from [Zenodo](https://zenodo.org/record/3779515).
+All the assemblies were ran as described in the Wengan manuscript. NG50 was computed using a genome size of 3.08Gb.
 
 # Wengan components
 + A de Bruijn graph assembler ([Minia](https://github.com/GATB/minia), [Abyss](https://github.com/bcgsc/abyss) or [DiscovarDenovo](https://software.broadinstitute.org/software/discovar/blog/))
