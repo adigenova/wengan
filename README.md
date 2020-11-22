@@ -163,24 +163,25 @@ It is recommended to use/download the latest binary release (Linux) from :
 https://github.com/adigenova/wengan/releases
 
 ### Containers
-To facilitate the execution we provide docker/singulatiry containers for Wengan.
-Wengan images are hosted on Dockerhub and can be downloaded with the command:
+To facilitate the execution of Wengan, we provide docker/singularity containers.
+Wengan images are hosted on [Dockerhub](https://hub.docker.com/repository/docker/adigenova/wengan) and can be downloaded with the command:
 
 ```
 docker pull adigenova/wengan:v0.2
 ```
+
 Alternatively, using singularity:
 
 ```
 export TMPDIR=/tmp
 singularity pull docker://adigenova/wengan:v0.2
 ```
-The lastest wengan version is v0.2
 
 #### Run WenganM using singularity
 ```
 #using singularity
 CONTAINER=/path_to_container/wengan_v0.2.sif
+
 #location of wengan in the container
 WENGAN=/wengan/wengan-v0.2-bin-Linux/wengan.pl
 
