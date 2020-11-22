@@ -24,6 +24,7 @@ Table of Contents
    * [Wengan components](#wengan-components)
    * [Getting the latest source code](#getting-the-latest-source-code)
       * [Instructions](#instructions)
+         * [Containers](#containers)
          * [Building Wengan from source](#building-wengan-from-source)
             * [Requirements](#requirements)
    * [Limitations](#limitations)
@@ -160,6 +161,38 @@ All the assemblies were ran as described in the Wengan manuscript. NG50 was comp
 ## Instructions
 It is recommended to use/download the latest binary release (Linux) from :
 https://github.com/adigenova/wengan/releases
+
+### Containers
+To facilitate the execution we provide docker/singulatiry containers for Wengan.
+Wengan images are hosted on Dockerhub and can be downloaded with the command:
+
+```
+docker pull adigenova/wengan:v0.2
+```
+Alternatively, using singularity:
+
+```
+export TMPDIR=/tmp
+singularity pull docker://adigenova/wengan:v0.2
+```
+The lastest wengan version is v0.2
+
+#### Run WenganM using singularity
+```
+#using singularity
+CONTAINER=/path_to_container/wengan_v0.2.sif
+#location of wengan in the container
+WENGAN=/wengan/wengan-v0.2-bin-Linux/wengan.pl
+
+#run WenganM with singularity exec
+singularity exec $CONTAINER perl ${WENGAN} \
+ -x pacraw \
+ -a M \
+ -s short.R1.fastq.gz,short.R2.fastq.gz \
+ -l pacbio.clr.fastq.gz \
+ -p asm_wengan -t 20 -g 3000
+```
+
 
 ### Building Wengan from source
 To compile Wengan run the following command:
